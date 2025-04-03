@@ -1,0 +1,212 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 80px;
+  height: 100vh;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+
+
+/* Top Row: Hero Section and Alerts */
+.top-row {
+display: flex;
+gap: 20px;
+height: 100%;
+max-height: 250vh;
+max-width: 190vh;
+margin-left: 0%;
+}
+
+.hero {
+flex: 1;
+background: rgba(255, 255, 255, 0.1);
+padding: 20px;
+border-radius: 15px;
+backdrop-filter: blur(10px);
+
+}
+
+.hero {
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+.welcome h1 {
+font-size: 2rem;
+color: #a2fd65;
+}
+
+.quick-stats {
+display: flex;
+justify-content: space-between;
+gap: 10px;
+}
+
+.stat {
+text-align: center;
+background: rgba(255, 255, 255, 0.1);
+padding: 10px;
+border-radius: 10px;
+flex: 1;
+transition: transform 0.3s;
+}
+
+.stat:hover {
+transform: scale(1.05);
+}
+
+.stat .icon {
+font-size: 2rem;
+}
+
+.stat .value {
+font-size: 1.5rem;
+font-weight: bold;
+}
+
+.quick-actions {
+display: flex;
+gap: 140px;
+
+}
+
+.quick-actions .btn {
+  background: #2575fc;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s;
+
+}
+
+.quick-actions button:hover {
+  background: #1a5bbf;
+}
+.alerts {
+flex: 1;
+background: rgba(255, 255, 255, 0.1);
+padding: 20px;
+border-radius: 15px;
+backdrop-filter: blur(10px);
+
+}
+
+.alerts h2 {
+font-size: 2rem;
+color: #a2fd65;
+}
+
+.alerts ul {
+border: 3px solid rgba(198, 225, 80, 0.648);
+border-radius: 8px;
+list-style: none;
+overflow-y: scroll;
+}
+
+.alerts li {
+margin: 10px 0;
+padding: 10px;
+border-radius: 5px;
+}
+
+.alerts .high {
+background: rgba(255, 99, 71, 0.3);
+}
+
+.alerts .medium {
+background: rgba(255, 165, 0, 0.3);
+}
+
+.alerts .low {
+background: rgba(0, 191, 255, 0.3);
+}
+
+/* Bottom Row: Sensor Activity, Sensor Status, and Recent Activities */
+.bottom-row {
+display: flex;
+gap: 40px;
+margin-top: 2%;
+max-height: 45vh;
+margin-bottom: 25% ;
+max-width: 190vh;
+margin-left: 0%;
+}
+/* Chart Containers */
+.chart {
+flex: 1;
+background: rgba(255, 255, 255, 0.1);
+padding: 20px;
+border-radius: 15px;
+backdrop-filter: blur(10px);
+height: 100%; /* Ensure the container takes full height */
+display: flex;
+flex-direction: column;
+}
+
+.chart h2 {
+font-size: 1.5rem;
+margin-bottom: 10px;
+color: #a2fd65;
+
+}
+
+.chart canvas {
+max-height: 80%; /* Limit the height of the chart */
+width: 100% !important; /* Ensure the chart fits the container width */
+}
+.chart {
+flex: 1;
+background: rgba(255, 255, 255, 0.1);
+padding: 20px;
+border-radius: 15px;
+backdrop-filter: blur(10px);
+max-width: 550px;
+max-height: 300px;
+
+}
+
+.chart h2{
+font-size: 1.5rem;
+margin-bottom: 10px;
+}
+.activity {
+flex: 1;
+background: rgba(255, 255, 255, 0.1);
+padding: 20px;
+border-radius: 15px;
+backdrop-filter: blur(10px);
+max-width: 550px;
+max-height: 550px;
+
+}
+.activity h2 {
+font-size: 1.5rem;
+margin-bottom: 10px;
+font-size: 1.5rem;
+color: #a2fd65;
+}
+
+.activity ul {
+border: 3px solid rgba(198, 225, 80, 0.648);
+border-radius: 8px;
+list-style: none;
+overflow-y: scroll;
+}
+
+.activity li {
+margin: 10px 0;
+padding: 10px;
+background: rgba(255, 255, 255, 0.1);
+border-radius: 5px;
+}

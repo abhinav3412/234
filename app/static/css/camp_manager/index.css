@@ -1,0 +1,239 @@
+  /* Dark Overlay using Pseudo-Element */
+  body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Adjust opacity (0.5 = 50% dark) */
+    z-index: -1; /* Place it behind the content */
+  }
+  
+  /* Heading with Typewriter Effect */
+  .heading {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5rem;
+    color: #a2fd65;
+    text-align: left;
+    margin-bottom: 2vh;
+    display: flex;
+    align-items: baseline;
+  }
+  
+  .static-text {
+    font-weight: 600;
+    margin-right: 0.5rem;
+  }
+  
+  .typewriter-text {
+    font-weight: 400;
+    font-size: 2rem;
+    color: #a2fd65; /* Same color as "Welcome Camp Head" */
+    overflow: hidden;
+    border-right: 0.15em solid #a2fd65; /* Cursor effect */
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+  }
+  
+  /* Logout Button */
+  .logout {
+    position: fixed;
+    top: 2vh;
+    right: 5%;
+    background: #ff6f61;
+    border: none;
+    padding: 1vh 2vw;
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    z-index: 1000; /* Ensure it's above other elements */
+  }
+  
+  .logout:hover {
+    background: #ff3b2f;
+  }
+  
+  /* Rows and Boxes */
+  .row {
+    display: flex;
+    gap: 2vw;
+    margin-bottom: 2vh;
+  }
+  .box {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2vh 2vw;
+    flex: 1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+    position: relative; /* Required for pseudo-element */
+    overflow: hidden; /* Ensure the blur doesn't overflow */
+  }
+  
+  /* Pseudo-element for blur effect */
+  .box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px); /* Apply blur here */
+    z-index: -1; /* Place it behind the box content */
+    border-radius: 20px; /* Match the box's border radius */
+  }
+  
+  .box:hover {
+    transform: scale(1.02);
+  }
+  /* Headings */
+  h2 {
+    color: #a2fd65;
+    font-size: 2.5vh;
+    margin-bottom: 1.5vh;
+  }
+  
+  /* Search Bar */
+  .search-container {
+    position: relative;
+    margin-top: 1vh;
+  }
+  
+  .search-container input {
+    width: 100%;
+    padding: 1vh 1vw 1vh 3vw;
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1.5vh;
+    outline: none;
+  }
+  
+  .search-container i {
+    position: absolute;
+    left: 1vw;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  /* Scrollable Lists */
+  .scrollable {
+    max-height: 30vh;
+    overflow-y: auto;
+    margin-top: 1vh;
+    color: white;
+  }
+  
+  .scrollable ul {
+    list-style: none;
+  }
+  
+  .scrollable li {
+    padding: 1vh 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Accept and Decline Buttons */
+  .accept {
+    background: #28a745;
+    border: none;
+    padding: 0.5vh 1vw;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .accept:hover {
+    background: #218838;
+  }
+  
+  .decline {
+    background: #dc3545;
+    border: none;
+    padding: 0.5vh 1vw;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .decline:hover {
+    background: #c82333;
+  }
+  
+  /* Camp Details */
+  .camp-details .detail-item {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    color: white;
+    margin: 1vh 0;
+    font-size: 1.2rem; /* Adjusted font size */
+  }
+  
+  .camp-details .detail-item i {
+    font-size: 1.5rem;
+    color: #a2fd65;
+  }
+  
+  /* Resource Details */
+  .resource-details, .capacity-details {
+    display: flex;
+    color: white;
+    flex-direction: column;
+    gap: 1vh;
+  }
+  
+  .resource-details i, .capacity-details i {
+    font-size: 2rem;
+    margin-bottom: 1vh;
+    color: #a2fd65;
+  }
+  
+  /* Supply Request Form */
+  #supply-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    margin-top: 1vh;
+  }
+  
+  #supply-form label {
+    color: #a2fd65;
+  }
+  
+  #supply-form input {
+    padding: 1vh 1vw;
+    border-radius: 10px;
+    border: none;
+  }
+  
+  #supply-form button {
+    background: #2575fc;
+    border: none;
+    padding: 1vh 2vw;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  /* Chart Container */
+  .chart-container {
+    height: 25vh; /* Adjusted height to fit the box */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Graphs */
+  canvas {
+    max-height: 100%;
+    width: 100% !important;
+  }

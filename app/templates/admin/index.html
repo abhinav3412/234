@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block csscontent%}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/admin/dashboard.css')}}">
+{% endblock %}
+
+{% block content %}
+  <div class="dashboard">
+    <!-- Top Row: Hero Section and Alerts -->
+    <div class="top-row">
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="welcome">
+          <h1>Welcome back, Admin!</h1>
+        </div>
+        <div class="quick-stats">
+          <div class="stat">
+            <span class="icon">👤</span>
+            <span class="value">{{ table_count_list['users'] }}</span>
+            <span class="label">Users</span>
+          </div>
+          <div class="stat">
+            <span class="icon">🏕️</span>
+            <span class="value">{{ table_count_list['camps'] }}</span>
+            <span class="label">Camps</span>
+          </div>
+          <div class="stat">
+            <span class="icon">🏚️</span>
+            <span class="value">{{ table_count_list['warehouses'] }}</span>
+            <span class="label">Warehouses</span>
+          </div>
+          <div class="stat">
+            <span class="icon">📡</span>
+            <span class="value">{{ table_count_list['sensors'] }}</span>
+            <span class="label">Sensors</span>
+          </div>
+        </div>
+        <div class="quick-actions">
+          <a href="{{ url_for('admin.user') }}" class="btn">Add User</a>
+          <a href="{{ url_for('admin.camp') }}" class="btn">Add Camp</a>
+          <a href="{{ url_for('admin.warehouse') }}" class="btn">Add Warehouse</a>
+          <a href="{{ url_for('admin.sensor') }}" class="btn">Add Sensor</a>
+        </div>
+      </section>
+
+      <!-- Alerts and Notifications -->
+      <section class="alerts">
+        <h2>Alerts</h2>
+        <ul>
+          <li class="high">Sensor 5678 offline.</li>
+          <li class="medium">Warehouse B low on food.</li>
+          <li class="low">User Alice inactive for 30 days.</li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- Bottom Row: Sensor Activity, Sensor Status, and Recent Activities -->
+    <div class="bottom-row">
+      <!-- Sensor Activity -->
+      <section class="chart">
+        <h2>User Activity</h2>
+        <canvas id="userActivityChart"></canvas>
+      </section>
+
+      <!-- Sensor Status -->
+      <section class="chart">
+        <h2>Sensor Status</h2>
+        <canvas id="sensorStatusChart"></canvas>
+      </section>
+
+      <!-- Recent Activities -->
+      <section class="activity">
+        <h2>Recent Activities</h2>
+        <ul>
+          <li>User John Doe added a new camp.</li>
+          <li>Sensor 1234 went offline.</li>
+          <li>Warehouse A is low on supplies.</li>
+          <li>New user registered: Jane Doe.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+{% endblock %}
+
+{% block jscontent %}
+    <script>
+        // Make updateSensorCount globally accessible
+        window.updateSensorCount = async function() {
+            try {
+                const response = await fetch('/admin/get_sensors');
+                const sensors = await response.json();
+                const sensorCount = sensors.length;
+                
+                // Update the sensor count in the quick stats
+                const sensorStat = document.querySelector('.stat:nth-child(4) .value');
+                if (sensorStat) {
+                    sensorStat.textContent = sensorCount;
+                }
+            } catch (error) {
+                console.error('Error updating sensor count:', error);
+            }
+        };
+    </script>
+    <script src="{{ url_for('static', filename='js/admin/index.js') }}"></script>
+{% endblock %}

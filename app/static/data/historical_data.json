@@ -1,0 +1,627 @@
+{
+    "1": [
+        {
+            "id": 1,
+            "name": "11",
+            "latitude": 12.16667,
+            "longitude": 75.33333,
+            "soil_type": "clay",
+            "timestamp": "2025-04-01T21:08:04.370403",
+            "rainfall": 146.24,
+            "forecasted_rainfall": 68.77,
+            "soil_saturation": 55.56,
+            "slope": 29.9,
+            "seismic_activity": 4.12,
+            "status": "Warning",
+            "risk_level": "Medium",
+            "affected_radius": 1690,
+            "predicted_landslide_time": "Within 1 week - Expected at 08-04-2025 09:08 PM",
+            "trends": {
+                "rainfall": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "soil_saturation": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "slope": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "seismic_activity": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                }
+            },
+            "soil_stability": {
+                "shear_strength": 20.89,
+                "factor_of_safety": 0.0,
+                "stability_index": 0.0,
+                "driving_force": 8802.3,
+                "resisting_force": 18.11,
+                "pore_pressure_ratio": 0.69
+            }
+        }
+    ],
+    "2": [
+        {
+            "id": 2,
+            "name": "12",
+            "latitude": 11.16667,
+            "longitude": 75.33333,
+            "soil_type": "sand",
+            "timestamp": "2025-04-01T21:01:00.243182",
+            "rainfall": 81.36,
+            "forecasted_rainfall": 62.22,
+            "soil_saturation": 69.34,
+            "slope": 16.37,
+            "seismic_activity": 4.71,
+            "status": "Normal",
+            "risk_level": "Low",
+            "affected_radius": 0,
+            "predicted_landslide_time": "No immediate risk - Monitoring continues",
+            "trends": {
+                "rainfall": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "soil_saturation": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "slope": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "seismic_activity": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                }
+            },
+            "soil_stability": {
+                "shear_strength": -1.41,
+                "factor_of_safety": -0.0,
+                "stability_index": 0.0,
+                "driving_force": 4423.75,
+                "resisting_force": -1.35,
+                "pore_pressure_ratio": 1.41
+            }
+        }
+    ],
+    "3": [
+        {
+            "id": 3,
+            "name": "13",
+            "latitude": 11.911231,
+            "longitude": 75.348,
+            "soil_type": "loam",
+            "timestamp": "2025-04-01T21:01:00.243182",
+            "rainfall": 113.14,
+            "forecasted_rainfall": 29.18,
+            "soil_saturation": 47.14,
+            "slope": 35.45,
+            "seismic_activity": 3.77,
+            "status": "Alert",
+            "risk_level": "High",
+            "affected_radius": 6651,
+            "predicted_landslide_time": "Within 48 hours - Expected at 03-04-2025 09:01 PM",
+            "trends": {
+                "rainfall": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "soil_saturation": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "slope": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "seismic_activity": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                }
+            },
+            "soil_stability": {
+                "shear_strength": 12.47,
+                "factor_of_safety": 0.0,
+                "stability_index": 0.0,
+                "driving_force": 9672.53,
+                "resisting_force": 10.16,
+                "pore_pressure_ratio": 0.52
+            }
+        }
+    ],
+    "4": [
+        {
+            "id": 4,
+            "name": "24",
+            "latitude": 12.16667,
+            "longitude": 75.33333,
+            "soil_type": "loam",
+            "timestamp": "2025-04-01T20:30:08.008489",
+            "rainfall": 120.52,
+            "forecasted_rainfall": 17.51,
+            "soil_saturation": 45.78,
+            "slope": 45.9,
+            "seismic_activity": 3.14,
+            "status": "Alert",
+            "risk_level": "High",
+            "affected_radius": 5243,
+            "predicted_landslide_time": "Within 48 hours - Expected at 03-04-2025 08:30 PM",
+            "trends": {
+                "rainfall": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "soil_saturation": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "slope": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "seismic_activity": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                }
+            },
+            "soil_stability": {
+                "shear_strength": 12.68,
+                "factor_of_safety": 0.0,
+                "stability_index": 0.0,
+                "driving_force": 11976.19,
+                "resisting_force": 8.82,
+                "pore_pressure_ratio": 0.5
+            }
+        }
+    ],
+    "5": [
+        {
+            "id": 5,
+            "name": "4",
+            "latitude": 12.16667,
+            "longitude": 75.33333,
+            "soil_type": "clay",
+            "timestamp": "2025-04-01T20:30:08.008489",
+            "rainfall": 38.4,
+            "forecasted_rainfall": 152.89,
+            "soil_saturation": 59.73,
+            "slope": 39.42,
+            "seismic_activity": 9.11,
+            "status": "Alert",
+            "risk_level": "High",
+            "affected_radius": 9023,
+            "predicted_landslide_time": "Within 24 hours - Expected at 02-04-2025 08:30 PM",
+            "trends": {
+                "rainfall": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "soil_saturation": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "slope": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "seismic_activity": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                }
+            },
+            "soil_stability": {
+                "shear_strength": 20.47,
+                "factor_of_safety": 0.0,
+                "stability_index": 0.0,
+                "driving_force": 11212.83,
+                "resisting_force": 15.81,
+                "pore_pressure_ratio": 0.82
+            }
+        }
+    ],
+    "2": [
+        {
+            "id": 2,
+            "name": "4",
+            "latitude": 12.16667,
+            "longitude": 75.33333,
+            "soil_type": "clay",
+            "timestamp": "2025-04-01T23:03:17.082785",
+            "rainfall": 59.06,
+            "forecasted_rainfall": 152.36,
+            "soil_saturation": 56.78,
+            "slope": 42.81,
+            "seismic_activity": 2.83,
+            "status": "Alert",
+            "risk_level": "High",
+            "affected_radius": 7908,
+            "predicted_landslide_time": "Within 48 hours - Expected at 03-04-2025 11:03 PM",
+            "trends": {
+                "rainfall": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "soil_saturation": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "slope": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "seismic_activity": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                }
+            },
+            "soil_stability": {
+                "shear_strength": 20.76,
+                "factor_of_safety": 0.0,
+                "stability_index": 0.0,
+                "driving_force": 11999.84,
+                "resisting_force": 15.23,
+                "pore_pressure_ratio": 0.73
+            }
+        },
+        {
+            "id": 2,
+            "name": "4",
+            "latitude": 12.16667,
+            "longitude": 75.33333,
+            "soil_type": "clay",
+            "timestamp": "2025-04-01T23:05:17.087428",
+            "rainfall": 0,
+            "forecasted_rainfall": 100.7,
+            "soil_saturation": 57.3,
+            "slope": 25.99,
+            "seismic_activity": 0.51,
+            "status": "Warning",
+            "risk_level": "Medium",
+            "affected_radius": 3126,
+            "predicted_landslide_time": "Within 1 week - Expected at 08-04-2025 11:05 PM",
+            "trends": {
+                "rainfall": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "soil_saturation": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "slope": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "seismic_activity": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                }
+            },
+            "soil_stability": {
+                "shear_strength": 20.71,
+                "factor_of_safety": 0.0,
+                "stability_index": 0.0,
+                "driving_force": 7737.99,
+                "resisting_force": 18.62,
+                "pore_pressure_ratio": 0.75
+            }
+        },
+        {
+            "id": 2,
+            "name": "4",
+            "latitude": 12.16667,
+            "longitude": 75.33333,
+            "soil_type": "clay",
+            "timestamp": "2025-04-01T23:07:17.225213",
+            "rainfall": 58.85,
+            "forecasted_rainfall": 34.05,
+            "soil_saturation": 51.63,
+            "slope": 5.51,
+            "seismic_activity": 2.29,
+            "status": "Normal",
+            "risk_level": "Low",
+            "affected_radius": 0,
+            "predicted_landslide_time": "No immediate risk - Monitoring continues",
+            "trends": {
+                "rainfall": {
+                    "trend": "decreasing",
+                    "change_rate": -2.0,
+                    "volatility": 1.0
+                },
+                "soil_saturation": {
+                    "trend": "stable",
+                    "change_rate": 0.009,
+                    "volatility": 0.005
+                },
+                "slope": {
+                    "trend": "decreasing",
+                    "change_rate": -0.489,
+                    "volatility": 0.244
+                },
+                "seismic_activity": {
+                    "trend": "decreasing",
+                    "change_rate": -1.389,
+                    "volatility": 0.695
+                }
+            },
+            "soil_stability": {
+                "shear_strength": 21.29,
+                "factor_of_safety": 0.01,
+                "stability_index": 0.0,
+                "driving_force": 1695.51,
+                "resisting_force": 21.19,
+                "pore_pressure_ratio": 0.59
+            }
+        },
+        {
+            "id": 2,
+            "name": "4",
+            "latitude": 12.16667,
+            "longitude": 75.33333,
+            "soil_type": "clay",
+            "timestamp": "2025-04-01T23:09:17.252290",
+            "rainfall": 155.03,
+            "forecasted_rainfall": 68.79,
+            "soil_saturation": 50.47,
+            "slope": 17.02,
+            "seismic_activity": 1.36,
+            "status": "Warning",
+            "risk_level": "Medium",
+            "affected_radius": 1308,
+            "predicted_landslide_time": "Within 1 week - Expected at 09-04-2025 11:09 PM",
+            "trends": {
+                "rainfall": {
+                    "trend": "stable",
+                    "change_rate": -0.003,
+                    "volatility": 0.707
+                },
+                "soil_saturation": {
+                    "trend": "stable",
+                    "change_rate": -0.047,
+                    "volatility": 0.046
+                },
+                "slope": {
+                    "trend": "decreasing",
+                    "change_rate": -0.753,
+                    "volatility": 0.616
+                },
+                "seismic_activity": {
+                    "trend": "decreasing",
+                    "change_rate": -0.144,
+                    "volatility": 0.528
+                }
+            },
+            "soil_stability": {
+                "shear_strength": 21.41,
+                "factor_of_safety": 0.0,
+                "stability_index": 0.0,
+                "driving_force": 5168.59,
+                "resisting_force": 20.47,
+                "pore_pressure_ratio": 0.57
+            }
+        }
+    ],
+    "3": [
+        {
+            "id": 3,
+            "name": "tvm",
+            "latitude": 11.2777,
+            "longitude": 16.412,
+            "soil_type": "clay",
+            "timestamp": "2025-04-01T23:03:17.083784",
+            "rainfall": 138.19,
+            "forecasted_rainfall": 65.58,
+            "soil_saturation": 55.71,
+            "slope": 27.43,
+            "seismic_activity": 1.36,
+            "status": "Warning",
+            "risk_level": "Medium",
+            "affected_radius": 2716,
+            "predicted_landslide_time": "Within 1 week - Expected at 08-04-2025 11:03 PM",
+            "trends": {
+                "rainfall": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "soil_saturation": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "slope": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "seismic_activity": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                }
+            },
+            "soil_stability": {
+                "shear_strength": 20.87,
+                "factor_of_safety": 0.0,
+                "stability_index": 0.0,
+                "driving_force": 8134.42,
+                "resisting_force": 18.52,
+                "pore_pressure_ratio": 0.7
+            }
+        },
+        {
+            "id": 3,
+            "name": "tvm",
+            "latitude": 11.2777,
+            "longitude": 16.412,
+            "soil_type": "clay",
+            "timestamp": "2025-04-01T23:05:17.087428",
+            "rainfall": 104.77,
+            "forecasted_rainfall": 65.34,
+            "soil_saturation": 56.93,
+            "slope": 23.53,
+            "seismic_activity": 2.49,
+            "status": "Warning",
+            "risk_level": "Medium",
+            "affected_radius": 2115,
+            "predicted_landslide_time": "Within 1 week - Expected at 08-04-2025 11:05 PM",
+            "trends": {
+                "rainfall": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "soil_saturation": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "slope": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                },
+                "seismic_activity": {
+                    "trend": "stable",
+                    "change_rate": 0,
+                    "volatility": 0
+                }
+            },
+            "soil_stability": {
+                "shear_strength": 20.75,
+                "factor_of_safety": 0.0,
+                "stability_index": 0.0,
+                "driving_force": 7049.59,
+                "resisting_force": 19.02,
+                "pore_pressure_ratio": 0.73
+            }
+        },
+        {
+            "id": 3,
+            "name": "tvm",
+            "latitude": 11.2777,
+            "longitude": 16.412,
+            "soil_type": "clay",
+            "timestamp": "2025-04-01T23:07:17.232206",
+            "rainfall": 99.34,
+            "forecasted_rainfall": 77.95,
+            "soil_saturation": 57.37,
+            "slope": 14.78,
+            "seismic_activity": 0,
+            "status": "Normal",
+            "risk_level": "Low",
+            "affected_radius": 0,
+            "predicted_landslide_time": "No immediate risk - Monitoring continues",
+            "trends": {
+                "rainfall": {
+                    "trend": "decreasing",
+                    "change_rate": -0.275,
+                    "volatility": 0.138
+                },
+                "soil_saturation": {
+                    "trend": "stable",
+                    "change_rate": 0.022,
+                    "volatility": 0.011
+                },
+                "slope": {
+                    "trend": "decreasing",
+                    "change_rate": -0.153,
+                    "volatility": 0.077
+                },
+                "seismic_activity": {
+                    "trend": "increasing",
+                    "change_rate": 0.587,
+                    "volatility": 0.294
+                }
+            },
+            "soil_stability": {
+                "shear_strength": 20.7,
+                "factor_of_safety": 0.0,
+                "stability_index": 0.0,
+                "driving_force": 4504.7,
+                "resisting_force": 20.02,
+                "pore_pressure_ratio": 0.75
+            }
+        },
+        {
+            "id": 3,
+            "name": "tvm",
+            "latitude": 11.2777,
+            "longitude": 16.412,
+            "soil_type": "clay",
+            "timestamp": "2025-04-01T23:09:17.256288",
+            "rainfall": 85.58,
+            "forecasted_rainfall": 21.44,
+            "soil_saturation": 58.12,
+            "slope": 0.27,
+            "seismic_activity": 3.28,
+            "status": "Normal",
+            "risk_level": "Low",
+            "affected_radius": 0,
+            "predicted_landslide_time": "No immediate risk - Monitoring continues",
+            "trends": {
+                "rainfall": {
+                    "trend": "decreasing",
+                    "change_rate": -0.17,
+                    "volatility": 0.151
+                },
+                "soil_saturation": {
+                    "trend": "stable",
+                    "change_rate": 0.015,
+                    "volatility": 0.012
+                },
+                "slope": {
+                    "trend": "decreasing",
+                    "change_rate": -0.289,
+                    "volatility": 0.241
+                },
+                "seismic_activity": {
+                    "trend": "decreasing",
+                    "change_rate": -0.53,
+                    "volatility": 0.793
+                }
+            },
+            "soil_stability": {
+                "shear_strength": 20.63,
+                "factor_of_safety": 0.25,
+                "stability_index": 0.0,
+                "driving_force": 83.21,
+                "resisting_force": 20.63,
+                "pore_pressure_ratio": 0.77
+            }
+        }
+    ]
+}

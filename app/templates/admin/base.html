@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+<nav class="navbar">
+    <ul>
+        <li><a href="{{ url_for('admin.index') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('admin.user') }}">Users</a></li>
+        <li><a href="{{ url_for('admin.camp') }}">Camps</a></li>
+        <li><a href="{{ url_for('admin.warehouse') }}">Warehouses</a></li>
+        <li><a href="{{ url_for('admin.sensor') }}">Sensors</a></li>
+        <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+    </ul>
+</nav>
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+{% block jscontent %}
+{% endblock %} 

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warehouse Manager Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/warehouse_manager/index.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Dark Overlay for Background Image -->
+    <div class="overlay"></div>
+
+    <!-- Heading with Typewriter Effect -->
+    <div class="heading">
+        <span class="static-text">Welcome Warehouse Manager</span>
+        <span class="typewriter-text"></span>
+    </div>
+
+    <!-- Logout Button -->
+    <button class="logout">Logout</button>
+
+    <!-- First Row -->
+    <div class="row">
+        <!-- Box 1: Warehouse Details -->
+        <div class="box">
+            <h2>Warehouse Details</h2>
+            <div class="warehouse-details">
+                <div class="detail-item">
+                    <i class="fas fa-id-badge"></i>
+                    <span><strong>Warehouse ID:</strong> <span id="warehouse-id"></span></span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span><strong>Location:</strong> <span id="warehouse-location"></span></span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-map"></i>
+                    <span><strong>Coordinates:</strong> <span id="warehouse-coordinates"></span></span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-info-circle"></i>
+                    <span><strong>Status:</strong> <span id="warehouse-status" class="badge"></span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Box 2: Food and Water Availability -->
+        <div class="box">
+            <h2>Food & Water Availability</h2>
+            <div class="resource-details">
+                <i class="fas fa-utensils"></i>
+                <p><strong>Food Available:</strong> <span id="food-available">0</span> kg</p>
+                <p><strong>Food Capacity:</strong> <span id="food-capacity">0</span> kg</p>
+                <i class="fas fa-tint"></i>
+                <p><strong>Water Available:</strong> <span id="water-available">0</span> L</p>
+                <p><strong>Water Capacity:</strong> <span id="water-capacity">0</span> L</p>
+            </div>
+        </div>
+
+        <!-- Box 3: Clothes and Essentials Availability -->
+        <div class="box">
+            <h2>Clothes & Essentials Availability</h2>
+            <div class="resource-details">
+                <i class="fas fa-tshirt"></i>
+                <p><strong>Clothes Available:</strong> <span id="clothes-available">0</span> sets</p>
+                <p><strong>Clothes Capacity:</strong> <span id="clothes-capacity">0</span> sets</p>
+                <i class="fas fa-first-aid"></i>
+                <p><strong>Essentials Available:</strong> <span id="essentials-available">0</span> kits</p>
+                <p><strong>Essentials Capacity:</strong> <span id="essentials-capacity">0</span> kits</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Row -->
+    <div class="row">
+        <!-- Box 1: Requests from Camps -->
+        <div class="box">
+            <h2>Requests from Camps</h2>
+            <div class="scrollable">
+                <ul id="requests-list">
+                    <!-- Requests will be populated by JavaScript -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- Box 2: Available Resources Graph -->
+        <div class="box">
+            <h2>Available Resources</h2>
+            <div class="chart-container">
+                <canvas id="availableResourcesChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Box 3: Vehicle Management -->
+        <div class="box">
+            <h2>Vehicle Management</h2>
+            <div class="vehicle-management">
+                <div class="add-vehicle-form">
+                    <h3>Add New Vehicle</h3>
+                    <form id="add-vehicle-form">
+                        <div class="form-group">
+                            <label for="vehicle-id">Vehicle ID:</label>
+                            <input type="text" id="vehicle-id" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicle-capacity">Capacity (kg):</label>
+                            <input type="number" id="vehicle-capacity" required>
+                        </div>
+                        <button type="submit" class="add-vehicle-btn">Add Vehicle</button>
+                    </form>
+                </div>
+                <div class="vehicle-list">
+                    <h3>Available Vehicles</h3>
+                    <div class="scrollable">
+                        <ul id="vehicles-list">
+                            <!-- Vehicles will be populated by JavaScript -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/warehouse_manager/index.js') }}"></script>
+</body>
+</html>

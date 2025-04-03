@@ -1,0 +1,36 @@
+[
+    {
+        "id": 1,
+        "lat": 11.921062,
+        "lng": 75.355452,
+        "label": "Sensor 1: Unknown, India",
+        "rainfall": 189.48,
+        "forecasted_rainfall": 45.78,
+        "soil_saturation": 79.6,
+        "slope": 41.26,
+        "seismic_activity": 6.4,
+        "soil_type": "clay",
+        "status": "Alert",
+        "risk": "High",
+        "affectedRadius": 6027,
+        "sensor": "Sensor 1",
+        "predicted_landslide_time": "22-03-2025 01:30 AM"
+    },
+    {
+        "id": 2,
+        "lat": 11.695785,
+        "lng": 76.031938,
+        "label": "Sensor 2: Wayanad, Kerala",
+        "rainfall": 13.3,
+        "forecasted_rainfall": 85.16,
+        "soil_saturation": 93.51,
+        "slope": 27.85,
+        "seismic_activity": 8.41,
+        "soil_type": "loam",
+        "status": "Alert",
+        "risk": "High",
+        "affectedRadius": 5192,
+        "sensor": "Sensor 2",
+        "predicted_landslide_time": "22-03-2025 01:30 AM"
+    }
+]

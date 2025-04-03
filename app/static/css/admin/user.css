@@ -1,0 +1,225 @@
+/* Main Content */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 10vh); /* Adjust for navbar height */
+    padding: 2vh 5%;
+    align-content: space-between;
+}
+
+.content {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 3% 4%;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 70vw;
+    text-align: center;
+    opacity: 0.9;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 1s ease-in-out;
+    margin-top: 11vh;
+    max-height: 700px;
+    height: 76%;
+    margin-bottom: 20vh;
+    overflow: hidden;
+}
+
+.content h1 {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 2.5rem; /* Adjust font size */
+    color: #a2fd65; /* Bright green color */
+    margin-bottom: 0vh;
+    margin-top: 0%;
+    text-transform: uppercase; /* Optional: Make text uppercase */
+    letter-spacing: 2px; /* Add spacing between letters */
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Add subtle shadow for depth */
+}
+
+/* Filter Section */
+.filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1%;
+    margin-bottom: 2vh;
+}
+
+.filter-section label {
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 0.5vh;
+}
+
+.filter-section input {
+    padding: 1vh;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    color: rgb(255, 255, 255);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.filter-section input:focus {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+#clear-filters {
+    padding: 1vh 2vw;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin-top: 1%;
+}
+
+#clear-filters:hover {
+    background: #005bb5;
+    transform: scale(1.05);
+}
+
+/* User Table */
+.user-table {
+    max-height: 400px; /* Fixed height for scrollable area */
+    overflow-y: auto; /* Enable vertical scrolling */
+    margin-top: 2vh;
+    margin-bottom: 20vh;
+}
+
+.user-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-table th,
+.user-table td {
+    padding: 1vh;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    color: beige;
+}
+
+.user-table th {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Buttons */
+.btn {
+    padding: 1vh 2vw;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: #005bb5;
+    transform: scale(1.05);
+}
+/* Edit and Delete Buttons */
+.edit-btn, .delete-btn {
+    padding: 1vh 1.2vw; /* Adjust padding for better sizing */
+    font-size: 0.9rem; /* Font size */
+    border: none; /* Remove default border */
+    border-radius: 15px; /* Increased border-radius for a rounded look */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    text-transform: uppercase; /* Optional: Make text uppercase */
+    font-weight: 600; /* Bold font for emphasis */
+    letter-spacing: 1px; /* Add spacing between letters */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Edit Button Styles */
+.edit-btn {
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+}
+
+.edit-btn:hover {
+    background-color: #005bb5; /* Darker blue on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+}
+
+/* Delete Button Styles */
+.delete-btn {
+    background-color: #ff4d4d; /* Red background */
+    color: white; /* White text */
+}
+
+.delete-btn:hover {
+    background-color: #e74c3c; /* Darker red on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+}
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 3% 4%;
+    border-radius: 20px;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+    opacity: 0.9;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h2 {
+    color: #a2fd65;
+    margin-bottom: 2vh;
+}
+
+.modal-content label {
+    display: block;
+    margin: 1vh 0 0.5vh;
+    color: rgb(255, 255, 255);
+    font-size: 1.3rem;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 1vh;
+    margin-bottom: 1.5vh;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    color: beige;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #ffdd57;
+}

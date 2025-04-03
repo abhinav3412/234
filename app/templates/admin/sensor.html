@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block csscontent %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/admin/sensor.css')}}">
+
+{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <div class="sensor-list">
+        <div class="sensor-header">
+            <h2>Existing Sensors</h2>
+            <button id="addSensorBtn" class="btn-add">Add New Sensor</button>
+        </div>
+        <div class="table-container">
+            <table class="sensor-table">
+                <thead>
+                    <tr>
+                        <th>Sensor Name</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>Soil Type</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sensor in sensors %}
+                    <tr>
+                        <td>{{ sensor.name }}</td>
+                        <td>{{ sensor.latitude }}</td>
+                        <td>{{ sensor.longitude }}</td>
+                        <td>{{ sensor.soil_type }}</td>
+                        <td>
+                            <span class="status-{{ sensor.status.lower() if sensor.status else 'unknown' }}">
+                                {{ sensor.status if sensor.status else 'Initializing...' }}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="delete-btn" onclick="deleteSensor({{ sensor.id }})">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Add Sensor Modal -->
+<div id="sensorModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Add New Sensor</h2>
+        <form id="sensorForm" method="POST" action="{{ url_for('admin.add_sensor') }}">
+            <div class="form-group">
+                <label for="sensor_name">Sensor Name</label>
+                <input type="text" id="sensor_name" name="sensor_name" required>
+            </div>
+            <div class="form-group">
+                <label for="latitude">Latitude</label>
+                <input type="number" id="latitude" name="latitude" step="any" required>
+            </div>
+            <div class="form-group">
+                <label for="longitude">Longitude</label>
+                <input type="number" id="longitude" name="longitude" step="any" required>
+            </div>
+            <div class="form-group">
+                <label for="soil_type">Soil Type</label>
+                <select id="soil_type" name="soil_type" required>
+                    <option value="clay">Clay</option>
+                    <option value="sand">Sand</option>
+                    <option value="loam">Loam</option>
+                    <option value="silt">Silt</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-submit">Add Sensor</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block jscontent %}
+<script>
+// Get modal elements
+const modal = document.getElementById("sensorModal");
+const addBtn = document.getElementById("addSensorBtn");
+const closeBtn = document.getElementsByClassName("close")[0];
+
+// Open modal when clicking the Add New Sensor button
+addBtn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// Close modal when clicking the X button
+closeBtn.onclick = function() {
+    modal.style.display = "none";
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Handle form submission
+document.getElementById('sensorForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    
+    fetch(this.action, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Sensor added successfully!');
+            // Update sensor count on admin dashboard
+            const adminDashboard = window.opener;
+            if (adminDashboard) {
+                adminDashboard.updateSensorCount();
+            }
+            location.reload();
+        } else {
+            alert('Error adding sensor: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error adding sensor. Please try again.');
+    });
+});
+
+// Function to delete sensor
+async function deleteSensor(sensorId) {
+    if (!confirm('Are you sure you want to delete this sensor?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/admin/delete_sensor/${sensorId}`, {
+            method: 'POST'
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+            alert('Sensor deleted successfully!');
+            // Update sensor count on admin dashboard
+            const adminDashboard = window.opener;
+            if (adminDashboard) {
+                adminDashboard.updateSensorCount();
+            }
+            location.reload();
+        } else {
+            alert('Error deleting sensor: ' + data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error deleting sensor. Please try again.');
+    }
+}
+</script>
+{% endblock %}
+    

@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block csscontent %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/warehouse.css') }}">
+{% endblock %}
+
+{% block content %}
+    <!-- Main Content -->
+    <div class="container">
+        <div class="content">
+            <h1>Warehouse Management</h1>
+            <!-- Filter Options -->
+            <div class="filter-section">
+                <label style="color: white;">Filter by Name:</label>
+                <input type="text" id="name-filter" placeholder="Enter name..." />
+                
+                <label style="color: white;">Filter by Location:</label>
+                <input type="text" id="location-filter" placeholder="Enter location..." />
+                
+                <button id="clear-filters">Clear Filters</button>
+            </div>
+
+            <!-- Add Warehouse Button -->
+            <button id="add-warehouse-btn" class="btn">Add New Warehouse</button>
+
+            <!-- Warehouse Table -->
+            <div class="warehouse-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Location</th>
+                            <th>Coordinates</th>
+                            <th>Food (kg)</th>
+                            <th>Water (L)</th>
+                            <th>Essential (kits)</th>
+                            <th>Clothes (sets)</th>
+                            <th>Manager</th>
+                            <th>Status</th>
+                            <th>Created At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="warehouse-list">
+                        <!-- Dynamically populated via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Warehouse Form Modal -->
+    <div id="warehouse-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Add Warehouse</h2>
+            <form id="warehouse-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" required>
+
+                <label for="latitude">Latitude:</label>
+                <input type="number" id="latitude" name="latitude" step="any" required>
+
+                <label for="longitude">Longitude:</label>
+                <input type="number" id="longitude" name="longitude" step="any" required>
+
+                <label for="food_capacity">Food Capacity (kg):</label>
+                <input type="number" id="food_capacity" name="food_capacity" required>
+
+                <label for="water_capacity">Water Capacity (L):</label>
+                <input type="number" id="water_capacity" name="water_capacity" required>
+
+                <label for="essential_capacity">Essential Kits Capacity:</label>
+                <input type="number" id="essential_capacity" name="essential_capacity" required>
+
+                <label for="clothes_capacity">Clothes Sets Capacity:</label>
+                <input type="number" id="clothes_capacity" name="clothes_capacity" required>
+
+                <label for="manager_id">Warehouse Manager:</label>
+                <select id="manager_id" name="manager_id">
+                    <option value="">Select a manager</option>
+                    <!-- Will be populated via JavaScript -->
+                </select>
+
+                <label for="status">Status:</label>
+                <select id="status" name="status" required>
+                    <option value="Operational">Operational</option>
+                    <option value="Maintenance">Maintenance</option>
+                    <option value="Closed">Closed</option>
+                </select>
+
+                <button type="submit" class="btn">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block jscontent %}
+    <script src="{{ url_for('static', filename='js/admin/warehouse.js') }}"></script>
+{% endblock %}
