@@ -81,7 +81,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    backdrop-filter: blur(10px); /* Apply blur here */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+    backdrop-filter: blur(10px);
     z-index: -1; /* Place it behind the box content */
     border-radius: 20px; /* Match the box's border radius */
   }
@@ -236,4 +237,74 @@
   canvas {
     max-height: 100%;
     width: 100% !important;
+  }
+
+  /* Delivery Status */
+  .delivery-status {
+    color: white;
+    padding: 1vh 0;
+  }
+
+  .delivery-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 1.5vh 1.5vw;
+    margin-bottom: 1.5vh;
+    transition: transform 0.3s ease;
+  }
+
+  .delivery-item:hover {
+    transform: translateX(5px);
+  }
+
+  .delivery-header {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    margin-bottom: 1vh;
+    color: #a2fd65;
+  }
+
+  .delivery-header i {
+    font-size: 1.5rem;
+  }
+
+  .delivery-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vh;
+  }
+
+  .delivery-details p {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+
+  .delivery-details strong {
+    color: #a2fd65;
+  }
+
+  /* Scrollable delivery list */
+  .delivery-status {
+    max-height: 30vh;
+    overflow-y: auto;
+  }
+
+  /* Custom scrollbar for delivery status */
+  .delivery-status::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .delivery-status::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+
+  .delivery-status::-webkit-scrollbar-thumb {
+    background: #a2fd65;
+    border-radius: 4px;
+  }
+
+  .delivery-status::-webkit-scrollbar-thumb:hover {
+    background: #8ee34d;
   }

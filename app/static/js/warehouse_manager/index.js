@@ -235,25 +235,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const capacity = document.getElementById('vehicle-capacity').value;
 
     try {
-      const response = await fetch("/warehouse_manager/add_vehicle", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          vehicle_id: vehicleId,
-          capacity: parseFloat(capacity)
-        })
-      });
+        // First get the warehouse data to get the warehouse_id
+        const warehouseResponse = await fetch("/warehouse_manager/get_warehouse");
+        if (!warehouseResponse.ok) throw new Error("Failed to fetch warehouse data");
+        const warehouseData = await warehouseResponse.json();
 
-      if (!response.ok) throw new Error("Failed to add vehicle");
-      
-      // Clear form and refresh list
-      document.getElementById('add-vehicle-form').reset();
-      fetchVehicles();
+        const response = await fetch("/warehouse_manager/add_vehicle", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                vehicle_id: vehicleId,
+                capacity: parseFloat(capacity),
+                warehouse_id: warehouseData.id
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to add vehicle");
+        }
+
+        const newVehicle = await response.json();
+        await fetchVehicles(); // Refresh the vehicles list
+        document.getElementById('add-vehicle-form').reset();
+        alert("Vehicle added successfully!");
     } catch (error) {
-      console.error("Error adding vehicle:", error);
-      alert("Failed to add vehicle. Please try again.");
+        console.error("Error adding vehicle:", error);
+        alert(error.message || "Failed to add vehicle");
     }
   }
 

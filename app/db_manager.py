@@ -635,18 +635,13 @@ class VehicleManager:
         Add a new vehicle to the database.
         """
         try:
-            # Validate inputs
-            if not vehicle_id or not capacity or not warehouse_id:
-                raise ValueError("Missing required fields")
-            
-            if capacity <= 0:
-                raise ValueError("Capacity must be greater than 0")
-
             new_vehicle = Vehicle(
                 vehicle_id=vehicle_id,
                 capacity=capacity,
-                warehouse_id=warehouse_id
+                warehouse_id=warehouse_id,
+                status='available'
             )
+            
             db.session.add(new_vehicle)
             db.session.commit()
             return new_vehicle
@@ -657,39 +652,31 @@ class VehicleManager:
     @staticmethod
     def get_vehicle(vid):
         """
-        Retrieve a vehicle by its ID.
+        Get a vehicle by its ID.
         """
         vehicle = Vehicle.query.get(vid)
         if vehicle:
             return {
-                "vid": vehicle.vid,
-                "vehicle_id": vehicle.vehicle_id,
-                "capacity": vehicle.capacity,
-                "status": vehicle.status,
-                "warehouse_id": vehicle.warehouse_id,
-                "created_at": vehicle.created_at.strftime("%Y-%m-%d %H:%M:%S")
+                'vid': vehicle.vid,
+                'vehicle_id': vehicle.vehicle_id,
+                'capacity': vehicle.capacity,
+                'status': vehicle.status,
+                'warehouse_id': vehicle.warehouse_id
             }
         return None
 
     @staticmethod
     def list_vehicles_by_warehouse(warehouse_id):
         """
-        Retrieve all vehicles for a specific warehouse.
+        List all vehicles for a specific warehouse.
         """
-        try:
-            vehicles = Vehicle.query.filter_by(warehouse_id=warehouse_id).all()
-            return [
-                {
-                    "vid": vehicle.vid,
-                    "vehicle_id": vehicle.vehicle_id,
-                    "capacity": vehicle.capacity,
-                    "status": vehicle.status,
-                    "created_at": vehicle.created_at.strftime("%Y-%m-%d %H:%M:%S")
-                }
-                for vehicle in vehicles
-            ]
-        except Exception as e:
-            raise ValueError(f"Error listing vehicles: {str(e)}")
+        vehicles = Vehicle.query.filter_by(warehouse_id=warehouse_id).all()
+        return [{
+            'vid': vehicle.vid,
+            'vehicle_id': vehicle.vehicle_id,
+            'capacity': vehicle.capacity,
+            'status': vehicle.status
+        } for vehicle in vehicles]
 
     @staticmethod
     def update_vehicle_status(vid, status):
@@ -700,24 +687,20 @@ class VehicleManager:
         if vehicle:
             vehicle.status = status
             db.session.commit()
-            return vehicle
-        return None
+            return True
+        return False
 
     @staticmethod
     def delete_vehicle(vid):
         """
         Delete a vehicle by its ID.
         """
-        try:
-            vehicle = Vehicle.query.get(vid)
-            if not vehicle:
-                return False
+        vehicle = Vehicle.query.get(vid)
+        if vehicle:
             db.session.delete(vehicle)
             db.session.commit()
             return True
-        except Exception as e:
-            db.session.rollback()
-            raise ValueError(f"Error deleting vehicle: {str(e)}")
+        return False
 
 ################## Custom Exceptions ##################
 

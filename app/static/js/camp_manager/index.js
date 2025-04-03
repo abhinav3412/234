@@ -230,10 +230,98 @@ const requestsChart = new Chart(document.getElementById('requestsChart'), {
 
 // Supply Request Form
 document.getElementById('send-supply-request').addEventListener('click', () => {
-  const food = document.getElementById('food').value;
-  const water = document.getElementById('water').value;
-  const essentials = document.getElementById('essentials').value;
-  const clothes = document.getElementById('clothes').value;
+  const food = parseInt(document.getElementById('food').value) || 0;
+  const water = parseInt(document.getElementById('water').value) || 0;
+  const essentials = parseInt(document.getElementById('essentials').value) || 0;
+  const clothes = parseInt(document.getElementById('clothes').value) || 0;
 
-  alert(`Request Sent:\nFood: ${food} kg\nWater: ${water} L\nEssentials: ${essentials} kits\nClothes: ${clothes} sets`);
+  // Validate inputs
+  if (food < 0 || water < 0 || essentials < 0 || clothes < 0) {
+    alert('Please enter valid quantities (non-negative numbers)');
+    return;
+  }
+
+  // Prepare request data
+  const requestData = {
+    items: {
+      food: food,
+      water: water,
+      essentials: essentials,
+      clothes: clothes
+    },
+    priority: 'general' // Can be modified to 'emergency' if needed
+  };
+
+  // Send request to server
+  fetch('/camp_manager/request_resources', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(requestData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert(`Request Sent Successfully!\nETA: ${data.data.eta}\nVehicle: ${data.data.vehicle_id}\nWarehouse: ${data.data.warehouse}`);
+      // Clear form
+      document.getElementById('food').value = '';
+      document.getElementById('water').value = '';
+      document.getElementById('essentials').value = '';
+      document.getElementById('clothes').value = '';
+      // Update delivery status
+      updateDeliveryStatus();
+    } else {
+      alert(`Error: ${data.message}`);
+    }
+  })
+  .catch(error => {
+    console.error('Error sending request:', error);
+    alert('Error sending request. Please try again.');
+  });
+});
+
+// Function to update delivery status
+function updateDeliveryStatus() {
+  fetch('/camp_manager/get_delivery_status')
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        const deliveryList = document.getElementById('delivery-list');
+        deliveryList.innerHTML = ''; // Clear existing list
+
+        if (data.deliveries.length === 0) {
+          deliveryList.innerHTML = '<p>No active deliveries</p>';
+          return;
+        }
+
+        data.deliveries.forEach(delivery => {
+          const deliveryItem = document.createElement('div');
+          deliveryItem.className = 'delivery-item';
+          deliveryItem.innerHTML = `
+            <div class="delivery-header">
+              <i class="fas fa-truck"></i>
+              <span>Vehicle ${delivery.vehicle_id}</span>
+            </div>
+            <div class="delivery-details">
+              <p><strong>Warehouse:</strong> ${delivery.warehouse}</p>
+              <p><strong>Status:</strong> ${delivery.status}</p>
+              <p><strong>ETA:</strong> ${delivery.eta}</p>
+            </div>
+          `;
+          deliveryList.appendChild(deliveryItem);
+        });
+      } else {
+        console.error('Error fetching delivery status:', data.message);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching delivery status:', error);
+    });
+}
+
+// Update delivery status every 5 minutes
+document.addEventListener('DOMContentLoaded', () => {
+  updateDeliveryStatus();
+  setInterval(updateDeliveryStatus, 5 * 60 * 1000); // 5 minutes
 });

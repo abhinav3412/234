@@ -293,13 +293,11 @@ class Vehicle(db.Model):
     __tablename__ = 'vehicles'
     
     vid = db.Column(db.Integer, primary_key=True)
-    warehouse_id = db.Column(db.Integer, db.ForeignKey('warehouses.wid'), nullable=False)
-    capacity = db.Column(db.Integer, nullable=False)  # in kg
+    vehicle_id = db.Column(db.String(50), unique=True, nullable=False)
+    capacity = db.Column(db.Float, nullable=False)
     status = db.Column(db.String(20), default='available')
+    warehouse_id = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
-    # Relationships
-    warehouse = db.relationship('Warehouse', backref='vehicles')
-    
     def __repr__(self):
-        return f'<Vehicle {self.vid}>'
+        return f'<Vehicle {self.vehicle_id}>'

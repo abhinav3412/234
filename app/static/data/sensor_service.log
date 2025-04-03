@@ -13867,3 +13867,299 @@ WHERE vehicle.warehouse_id = ?]
 2025-04-03 13:56:10,783 - INFO - 127.0.0.1 - - [03/Apr/2025 13:56:10] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
 2025-04-03 13:56:10,783 - INFO - 127.0.0.1 - - [03/Apr/2025 13:56:10] "GET /user/donation-summary HTTP/1.1" 200 -
 2025-04-03 13:56:10,805 - INFO - 127.0.0.1 - - [03/Apr/2025 13:56:10] "GET /user/camp_notification/1 HTTP/1.1" 200 -
+2025-04-03 14:06:41,279 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-03 14:06:41,280 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-03 14:06:41,282 - INFO -  * Restarting with stat
+2025-04-03 14:06:44,875 - WARNING -  * Debugger is active!
+2025-04-03 14:06:44,879 - INFO -  * Debugger PIN: 228-223-859
+2025-04-03 14:06:56,991 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-03 14:06:56,992 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-03 14:06:56,994 - INFO -  * Restarting with stat
+2025-04-03 14:06:59,290 - WARNING -  * Debugger is active!
+2025-04-03 14:06:59,294 - INFO -  * Debugger PIN: 228-223-859
+2025-04-03 14:07:01,644 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:01] "[32mGET / HTTP/1.1[0m" 302 -
+2025-04-03 14:07:01,673 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:01] "GET /auth/login HTTP/1.1" 200 -
+2025-04-03 14:07:01,805 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:01] "[36mGET /static/js/user/login.js HTTP/1.1[0m" 304 -
+2025-04-03 14:07:01,806 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:01] "[36mGET /static/css/auth/login.css HTTP/1.1[0m" 304 -
+2025-04-03 14:07:01,813 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:01] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:07:01,822 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:01] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:07:01,863 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:01] "[36mGET /static/images/favicon.ico HTTP/1.1[0m" 304 -
+2025-04-03 14:07:01,863 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:01] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:07:01,874 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:01] "[36mGET /static/images/favicon.ico HTTP/1.1[0m" 304 -
+2025-04-03 14:07:01,884 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:01] "[36mGET /static/images/favicon.ico HTTP/1.1[0m" 304 -
+2025-04-03 14:07:07,401 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:07] "[32mPOST /auth/login HTTP/1.1[0m" 302 -
+2025-04-03 14:07:07,450 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:07] "GET /admin/ HTTP/1.1" 200 -
+2025-04-03 14:07:07,507 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:07] "[36mGET /static/css/admin/dashboard.css HTTP/1.1[0m" 304 -
+2025-04-03 14:07:07,507 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:07] "[36mGET /static/js/admin/index.js HTTP/1.1[0m" 304 -
+2025-04-03 14:07:07,522 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:07] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:07:07,531 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:07] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:07:07,561 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:07] "GET /admin/get_sensors HTTP/1.1" 200 -
+2025-04-03 14:07:07,587 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:07] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:07:09,555 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:09] "[32mGET /auth/logout HTTP/1.1[0m" 302 -
+2025-04-03 14:07:09,571 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:09] "GET /auth/login HTTP/1.1" 200 -
+2025-04-03 14:07:09,629 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:09] "[36mGET /static/css/auth/login.css HTTP/1.1[0m" 304 -
+2025-04-03 14:07:09,630 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:09] "[36mGET /static/js/user/login.js HTTP/1.1[0m" 304 -
+2025-04-03 14:07:09,635 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:09] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:07:09,646 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:09] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:07:09,668 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:09] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:07:13,999 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:13] "[32mPOST /auth/login HTTP/1.1[0m" 302 -
+2025-04-03 14:07:14,045 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:14] "GET /camp_manager/ HTTP/1.1" 200 -
+2025-04-03 14:07:14,113 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:14] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:07:14,126 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:14] "GET /static/css/camp_manager/index.css HTTP/1.1" 200 -
+2025-04-03 14:07:14,138 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:14] "GET /static/js/camp_manager/index.js HTTP/1.1" 200 -
+2025-04-03 14:07:14,140 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:14] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:07:14,193 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:14] "GET /camp_manager/get_people HTTP/1.1" 200 -
+2025-04-03 14:07:14,203 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:14] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:07:14,207 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:14] "[35m[1mGET /camp_manager/get_delivery_status HTTP/1.1[0m" 500 -
+2025-04-03 14:07:14,241 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:14] "[35m[1mGET /camp_manager/get_camp_details HTTP/1.1[0m" 500 -
+2025-04-03 14:07:21,579 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:21] "[32mGET /auth/logout HTTP/1.1[0m" 302 -
+2025-04-03 14:07:21,591 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:21] "GET /auth/login HTTP/1.1" 200 -
+2025-04-03 14:07:21,624 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:21] "[36mGET /static/css/auth/login.css HTTP/1.1[0m" 304 -
+2025-04-03 14:07:21,626 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:21] "[36mGET /static/js/user/login.js HTTP/1.1[0m" 304 -
+2025-04-03 14:07:21,636 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:21] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:07:21,644 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:21] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:07:21,665 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:21] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:07:28,210 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:28] "[32mPOST /auth/login HTTP/1.1[0m" 302 -
+2025-04-03 14:07:28,231 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:28] "GET /warehouse_manager/ HTTP/1.1" 200 -
+2025-04-03 14:07:28,259 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:28] "[36mGET /static/css/warehouse_manager/index.css HTTP/1.1[0m" 304 -
+2025-04-03 14:07:28,265 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:28] "[36mGET /static/js/warehouse_manager/index.js HTTP/1.1[0m" 304 -
+2025-04-03 14:07:28,306 - DEBUG - Current user ID: 3
+2025-04-03 14:07:28,317 - DEBUG - Found warehouse: <Warehouse test1>
+2025-04-03 14:07:28,319 - DEBUG - Returning warehouse data: {'id': 1, 'name': 'test1', 'location': 'payyanur', 'coordinates_lat': 20.2, 'coordinates_lng': 23.22, 'status': 'Operational', 'food_capacity': 25, 'water_capacity': 217, 'essential_capacity': 29, 'clothes_capacity': 1}
+2025-04-03 14:07:28,322 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:28] "GET /warehouse_manager/get_warehouse HTTP/1.1" 200 -
+2025-04-03 14:07:28,324 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:28] "GET /warehouse_manager/list_vehicles HTTP/1.1" 200 -
+2025-04-03 14:07:35,345 - ERROR - Error adding vehicle: Entity namespace for "vehicles" has no property "vehicle_id"
+2025-04-03 14:07:35,345 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:35] "[35m[1mPOST /warehouse_manager/add_vehicle HTTP/1.1[0m" 500 -
+2025-04-03 14:07:40,639 - INFO - 127.0.0.1 - - [03/Apr/2025 14:07:40] "[36mGET /static/css/warehouse_manager/index.css HTTP/1.1[0m" 304 -
+2025-04-03 14:08:15,775 - INFO -  * Detected change in 'C:\\Users\\PREDATOR\\major-project\\app\\db_manager.py', reloading
+2025-04-03 14:08:16,067 - INFO -  * Restarting with stat
+2025-04-03 14:08:18,313 - WARNING -  * Debugger is active!
+2025-04-03 14:08:18,319 - INFO -  * Debugger PIN: 228-223-859
+2025-04-03 14:08:40,539 - INFO - 127.0.0.1 - - [03/Apr/2025 14:08:40] "GET /warehouse_manager/ HTTP/1.1" 200 -
+2025-04-03 14:08:40,692 - INFO - 127.0.0.1 - - [03/Apr/2025 14:08:40] "[36mGET /static/css/warehouse_manager/index.css HTTP/1.1[0m" 304 -
+2025-04-03 14:08:40,713 - INFO - 127.0.0.1 - - [03/Apr/2025 14:08:40] "GET /static/js/warehouse_manager/index.js HTTP/1.1" 200 -
+2025-04-03 14:08:40,732 - DEBUG - Current user ID: 3
+2025-04-03 14:08:40,735 - DEBUG - Found warehouse: <Warehouse test1>
+2025-04-03 14:08:40,735 - DEBUG - Returning warehouse data: {'id': 1, 'name': 'test1', 'location': 'payyanur', 'coordinates_lat': 20.2, 'coordinates_lng': 23.22, 'status': 'Operational', 'food_capacity': 25, 'water_capacity': 217, 'essential_capacity': 29, 'clothes_capacity': 1}
+2025-04-03 14:08:40,737 - INFO - 127.0.0.1 - - [03/Apr/2025 14:08:40] "GET /warehouse_manager/get_warehouse HTTP/1.1" 200 -
+2025-04-03 14:08:40,738 - INFO - 127.0.0.1 - - [03/Apr/2025 14:08:40] "GET /warehouse_manager/list_vehicles HTTP/1.1" 200 -
+2025-04-03 14:08:46,080 - DEBUG - Current user ID: 3
+2025-04-03 14:08:46,082 - DEBUG - Found warehouse: <Warehouse test1>
+2025-04-03 14:08:46,082 - DEBUG - Returning warehouse data: {'id': 1, 'name': 'test1', 'location': 'payyanur', 'coordinates_lat': 20.2, 'coordinates_lng': 23.22, 'status': 'Operational', 'food_capacity': 25, 'water_capacity': 217, 'essential_capacity': 29, 'clothes_capacity': 1}
+2025-04-03 14:08:46,086 - INFO - 127.0.0.1 - - [03/Apr/2025 14:08:46] "GET /warehouse_manager/get_warehouse HTTP/1.1" 200 -
+2025-04-03 14:08:46,121 - ERROR - Error adding vehicle: Entity namespace for "vehicles" has no property "vehicle_id"
+2025-04-03 14:08:46,127 - INFO - 127.0.0.1 - - [03/Apr/2025 14:08:46] "[35m[1mPOST /warehouse_manager/add_vehicle HTTP/1.1[0m" 500 -
+2025-04-03 14:08:51,574 - DEBUG - Current user ID: 3
+2025-04-03 14:08:51,576 - DEBUG - Found warehouse: <Warehouse test1>
+2025-04-03 14:08:51,577 - DEBUG - Returning warehouse data: {'id': 1, 'name': 'test1', 'location': 'payyanur', 'coordinates_lat': 20.2, 'coordinates_lng': 23.22, 'status': 'Operational', 'food_capacity': 25, 'water_capacity': 217, 'essential_capacity': 29, 'clothes_capacity': 1}
+2025-04-03 14:08:51,578 - INFO - 127.0.0.1 - - [03/Apr/2025 14:08:51] "GET /warehouse_manager/get_warehouse HTTP/1.1" 200 -
+2025-04-03 14:08:51,600 - ERROR - Error adding vehicle: Entity namespace for "vehicles" has no property "vehicle_id"
+2025-04-03 14:08:51,601 - INFO - 127.0.0.1 - - [03/Apr/2025 14:08:51] "[35m[1mPOST /warehouse_manager/add_vehicle HTTP/1.1[0m" 500 -
+2025-04-03 14:08:57,521 - INFO - 127.0.0.1 - - [03/Apr/2025 14:08:57] "[36mGET /static/css/warehouse_manager/index.css HTTP/1.1[0m" 304 -
+2025-04-03 14:09:16,833 - INFO -  * Detected change in 'C:\\Users\\PREDATOR\\major-project\\app\\models.py', reloading
+2025-04-03 14:09:17,097 - INFO -  * Restarting with stat
+2025-04-03 14:09:19,426 - WARNING -  * Debugger is active!
+2025-04-03 14:09:19,430 - INFO -  * Debugger PIN: 228-223-859
+2025-04-03 14:09:35,695 - INFO -  * Detected change in 'C:\\Users\\PREDATOR\\major-project\\app\\models.py', reloading
+2025-04-03 14:09:35,987 - INFO -  * Restarting with stat
+2025-04-03 14:09:38,376 - WARNING -  * Debugger is active!
+2025-04-03 14:09:38,383 - INFO -  * Debugger PIN: 228-223-859
+2025-04-03 14:10:24,655 - INFO - 127.0.0.1 - - [03/Apr/2025 14:10:24] "GET /warehouse_manager/ HTTP/1.1" 200 -
+2025-04-03 14:10:24,771 - INFO - 127.0.0.1 - - [03/Apr/2025 14:10:24] "[36mGET /static/css/warehouse_manager/index.css HTTP/1.1[0m" 304 -
+2025-04-03 14:10:24,772 - INFO - 127.0.0.1 - - [03/Apr/2025 14:10:24] "[36mGET /static/js/warehouse_manager/index.js HTTP/1.1[0m" 304 -
+2025-04-03 14:10:24,792 - DEBUG - Current user ID: 3
+2025-04-03 14:10:24,795 - DEBUG - Found warehouse: <Warehouse test1>
+2025-04-03 14:10:24,796 - DEBUG - Returning warehouse data: {'id': 1, 'name': 'test1', 'location': 'payyanur', 'coordinates_lat': 20.2, 'coordinates_lng': 23.22, 'status': 'Operational', 'food_capacity': 25, 'water_capacity': 217, 'essential_capacity': 29, 'clothes_capacity': 1}
+2025-04-03 14:10:24,796 - INFO - 127.0.0.1 - - [03/Apr/2025 14:10:24] "GET /warehouse_manager/get_warehouse HTTP/1.1" 200 -
+2025-04-03 14:10:24,797 - ERROR - Error listing vehicles: (sqlite3.OperationalError) no such column: vehicles.vehicle_id
+[SQL: SELECT vehicles.vid AS vehicles_vid, vehicles.vehicle_id AS vehicles_vehicle_id, vehicles.capacity AS vehicles_capacity, vehicles.status AS vehicles_status, vehicles.warehouse_id AS vehicles_warehouse_id, vehicles.created_at AS vehicles_created_at 
+FROM vehicles 
+WHERE vehicles.warehouse_id = ?]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-03 14:10:24,798 - INFO - 127.0.0.1 - - [03/Apr/2025 14:10:24] "[35m[1mGET /warehouse_manager/list_vehicles HTTP/1.1[0m" 500 -
+2025-04-03 14:10:25,636 - INFO - 127.0.0.1 - - [03/Apr/2025 14:10:25] "GET /warehouse_manager/ HTTP/1.1" 200 -
+2025-04-03 14:10:25,671 - INFO - 127.0.0.1 - - [03/Apr/2025 14:10:25] "[36mGET /static/css/warehouse_manager/index.css HTTP/1.1[0m" 304 -
+2025-04-03 14:10:25,679 - INFO - 127.0.0.1 - - [03/Apr/2025 14:10:25] "[36mGET /static/js/warehouse_manager/index.js HTTP/1.1[0m" 304 -
+2025-04-03 14:10:25,721 - DEBUG - Current user ID: 3
+2025-04-03 14:10:25,725 - DEBUG - Found warehouse: <Warehouse test1>
+2025-04-03 14:10:25,725 - ERROR - Error listing vehicles: (sqlite3.OperationalError) no such column: vehicles.vehicle_id
+[SQL: SELECT vehicles.vid AS vehicles_vid, vehicles.vehicle_id AS vehicles_vehicle_id, vehicles.capacity AS vehicles_capacity, vehicles.status AS vehicles_status, vehicles.warehouse_id AS vehicles_warehouse_id, vehicles.created_at AS vehicles_created_at 
+FROM vehicles 
+WHERE vehicles.warehouse_id = ?]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-03 14:10:25,726 - DEBUG - Returning warehouse data: {'id': 1, 'name': 'test1', 'location': 'payyanur', 'coordinates_lat': 20.2, 'coordinates_lng': 23.22, 'status': 'Operational', 'food_capacity': 25, 'water_capacity': 217, 'essential_capacity': 29, 'clothes_capacity': 1}
+2025-04-03 14:10:25,727 - INFO - 127.0.0.1 - - [03/Apr/2025 14:10:25] "[35m[1mGET /warehouse_manager/list_vehicles HTTP/1.1[0m" 500 -
+2025-04-03 14:10:25,728 - INFO - 127.0.0.1 - - [03/Apr/2025 14:10:25] "GET /warehouse_manager/get_warehouse HTTP/1.1" 200 -
+2025-04-03 14:28:24,498 - INFO -  * Detected change in 'C:\\Users\\PREDATOR\\major-project\\app\\models.py', reloading
+2025-04-03 14:28:24,761 - INFO -  * Restarting with stat
+2025-04-03 14:28:27,469 - WARNING -  * Debugger is active!
+2025-04-03 14:28:27,480 - INFO -  * Debugger PIN: 228-223-859
+2025-04-03 14:28:33,475 - ERROR - Error: Directory migrations already exists and is not empty
+2025-04-03 14:28:41,252 - INFO -  * Detected change in 'C:\\Users\\PREDATOR\\major-project\\migrations\\env.py', reloading
+2025-04-03 14:28:41,511 - INFO -  * Restarting with stat
+2025-04-03 14:28:44,168 - WARNING -  * Debugger is active!
+2025-04-03 14:28:44,179 - INFO -  * Debugger PIN: 228-223-859
+2025-04-03 14:29:12,628 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-03 14:29:12,628 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-03 14:29:12,632 - INFO -  * Restarting with stat
+2025-04-03 14:29:15,450 - WARNING -  * Debugger is active!
+2025-04-03 14:29:15,455 - INFO -  * Debugger PIN: 228-223-859
+2025-04-03 14:34:38,766 - INFO - 127.0.0.1 - - [03/Apr/2025 14:34:38] "[31m[1mGET /warehouse_manager/ HTTP/1.1[0m" 401 -
+2025-04-03 14:34:40,162 - INFO - 127.0.0.1 - - [03/Apr/2025 14:34:40] "[31m[1mGET /warehouse_manager/ HTTP/1.1[0m" 401 -
+2025-04-03 14:34:40,668 - INFO - 127.0.0.1 - - [03/Apr/2025 14:34:40] "[31m[1mGET /warehouse_manager/ HTTP/1.1[0m" 401 -
+2025-04-03 14:34:40,895 - INFO - 127.0.0.1 - - [03/Apr/2025 14:34:40] "[31m[1mGET /warehouse_manager/ HTTP/1.1[0m" 401 -
+2025-04-03 14:35:01,458 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:01] "[33mGET /auth/ HTTP/1.1[0m" 404 -
+2025-04-03 14:35:15,194 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:15] "GET /auth/login HTTP/1.1" 200 -
+2025-04-03 14:35:15,608 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:15] "[36mGET /static/css/auth/login.css HTTP/1.1[0m" 304 -
+2025-04-03 14:35:15,626 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:15] "[36mGET /static/js/user/login.js HTTP/1.1[0m" 304 -
+2025-04-03 14:35:15,651 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:15] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:35:15,661 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:15] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:35:15,685 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:15] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:35:15,687 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:15] "[36mGET /static/images/favicon.ico HTTP/1.1[0m" 304 -
+2025-04-03 14:35:15,699 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:15] "[36mGET /static/images/favicon.ico HTTP/1.1[0m" 304 -
+2025-04-03 14:35:15,710 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:15] "[36mGET /static/images/favicon.ico HTTP/1.1[0m" 304 -
+2025-04-03 14:35:21,446 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:21] "[32mPOST /auth/login HTTP/1.1[0m" 302 -
+2025-04-03 14:35:21,459 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:21] "GET /auth/login HTTP/1.1" 200 -
+2025-04-03 14:35:21,497 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:21] "[36mGET /static/css/auth/login.css HTTP/1.1[0m" 304 -
+2025-04-03 14:35:21,498 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:21] "[36mGET /static/js/user/login.js HTTP/1.1[0m" 304 -
+2025-04-03 14:35:21,498 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:21] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:35:21,510 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:21] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:35:21,529 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:21] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:35:26,146 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:26] "[32mPOST /auth/login HTTP/1.1[0m" 302 -
+2025-04-03 14:35:26,160 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:26] "GET /auth/login HTTP/1.1" 200 -
+2025-04-03 14:35:26,226 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:26] "[36mGET /static/css/auth/login.css HTTP/1.1[0m" 304 -
+2025-04-03 14:35:26,228 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:26] "[36mGET /static/js/user/login.js HTTP/1.1[0m" 304 -
+2025-04-03 14:35:26,232 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:26] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:35:26,245 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:26] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:35:26,269 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:26] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:35:57,651 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:57] "[32mPOST /auth/register HTTP/1.1[0m" 302 -
+2025-04-03 14:35:57,680 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:57] "GET /user/index HTTP/1.1" 200 -
+2025-04-03 14:35:57,731 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:57] "[36mGET /static/css/user/home.css HTTP/1.1[0m" 304 -
+2025-04-03 14:35:57,738 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:57] "[36mGET /static/js/user/index.js HTTP/1.1[0m" 304 -
+2025-04-03 14:35:57,741 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:57] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:35:57,750 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:57] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:35:57,792 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:57] "GET /user/list_all_camps HTTP/1.1" 200 -
+2025-04-03 14:35:57,800 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:57] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:35:57,802 - INFO - 127.0.0.1 - - [03/Apr/2025 14:35:57] "GET /user/donation-summary HTTP/1.1" 200 -
+2025-04-03 14:36:00,138 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:00] "GET /user/alerts HTTP/1.1" 200 -
+2025-04-03 14:36:00,203 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:00] "[36mGET /static/js/user/alert.js HTTP/1.1[0m" 304 -
+2025-04-03 14:36:00,208 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:00] "[35m[1mGET /static/alert-sound.mp3 HTTP/1.1[0m" 206 -
+2025-04-03 14:36:00,232 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:00] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:36:00,234 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:00] "[36mGET /static/css/user/alert.css HTTP/1.1[0m" 304 -
+2025-04-03 14:36:00,260 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:00] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:36:00,296 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:00] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:36:00,326 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:00] "[36mGET /static/data/sensor_data.json HTTP/1.1[0m" 304 -
+2025-04-03 14:36:01,987 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:01] "GET /user/camps HTTP/1.1" 200 -
+2025-04-03 14:36:02,025 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:02] "[36mGET /static/css/user/camps.css HTTP/1.1[0m" 304 -
+2025-04-03 14:36:02,031 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:02] "[36mGET /static/js/user/camps.js HTTP/1.1[0m" 304 -
+2025-04-03 14:36:02,041 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:02] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:36:02,053 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:02] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:36:02,077 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:02] "GET /user/list_all_camps HTTP/1.1" 200 -
+2025-04-03 14:36:02,083 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:02] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:36:05,733 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:05] "GET /user/donations HTTP/1.1" 200 -
+2025-04-03 14:36:05,810 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:05] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:36:05,817 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:05] "[36mGET /static/css/user/donations.css HTTP/1.1[0m" 304 -
+2025-04-03 14:36:05,820 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:05] "[36mGET /static/js/user/donations.js HTTP/1.1[0m" 304 -
+2025-04-03 14:36:05,851 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:05] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:36:05,883 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:05] "GET /user/user-donation-summary HTTP/1.1" 200 -
+2025-04-03 14:36:06,770 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:06] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:36:08,667 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:08] "GET /user/volunteer HTTP/1.1" 200 -
+2025-04-03 14:36:08,741 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:08] "[36mGET /static/css/user/volunteer.css HTTP/1.1[0m" 304 -
+2025-04-03 14:36:08,743 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:08] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:36:08,747 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:08] "[36mGET /static/js/user/volunteer.js HTTP/1.1[0m" 304 -
+2025-04-03 14:36:08,773 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:08] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:36:08,798 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:08] "GET /user/volunteer/get_volunteer_history/1 HTTP/1.1" 200 -
+2025-04-03 14:36:08,825 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:08] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:36:11,828 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:11] "GET /user/forums HTTP/1.1" 200 -
+2025-04-03 14:36:11,883 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:11] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:36:11,889 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:11] "[36mGET /static/css/user/forums.css HTTP/1.1[0m" 304 -
+2025-04-03 14:36:11,897 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:11] "[36mGET /static/js/user/forums.js HTTP/1.1[0m" 304 -
+2025-04-03 14:36:11,914 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:11] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:36:11,971 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:11] "GET /user/forums/get_threads HTTP/1.1" 200 -
+2025-04-03 14:36:11,979 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:11] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:36:13,842 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:13] "GET /user/guide HTTP/1.1" 200 -
+2025-04-03 14:36:13,925 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:13] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:36:13,935 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:13] "[36mGET /static/css/user/guide.css HTTP/1.1[0m" 304 -
+2025-04-03 14:36:13,942 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:13] "[36mGET /static/js/user/guide.js HTTP/1.1[0m" 304 -
+2025-04-03 14:36:13,962 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:13] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:36:14,017 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:14] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:36:15,489 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:15] "[32mGET /auth/logout HTTP/1.1[0m" 302 -
+2025-04-03 14:36:15,499 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:15] "GET /auth/login HTTP/1.1" 200 -
+2025-04-03 14:36:15,533 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:15] "[36mGET /static/css/auth/login.css HTTP/1.1[0m" 304 -
+2025-04-03 14:36:15,535 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:15] "[36mGET /static/js/user/login.js HTTP/1.1[0m" 304 -
+2025-04-03 14:36:15,545 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:15] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:36:15,553 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:15] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:36:15,579 - INFO - 127.0.0.1 - - [03/Apr/2025 14:36:15] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:37:13,280 - INFO -  * Detected change in 'C:\\Users\\PREDATOR\\major-project\\create_admin.py', reloading
+2025-04-03 14:37:13,574 - INFO -  * Restarting with stat
+2025-04-03 14:37:15,980 - WARNING -  * Debugger is active!
+2025-04-03 14:37:15,985 - INFO -  * Debugger PIN: 228-223-859
+2025-04-03 14:37:35,500 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:35] "[32mPOST /auth/login HTTP/1.1[0m" 302 -
+2025-04-03 14:37:35,585 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:35] "GET /admin/ HTTP/1.1" 200 -
+2025-04-03 14:37:35,870 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:35] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:37:35,886 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:35] "[36mGET /static/js/admin/index.js HTTP/1.1[0m" 304 -
+2025-04-03 14:37:35,889 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:35] "[36mGET /static/css/admin/dashboard.css HTTP/1.1[0m" 304 -
+2025-04-03 14:37:35,896 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:35] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:37:35,908 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:35] "GET /admin/get_sensors HTTP/1.1" 200 -
+2025-04-03 14:37:35,930 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:35] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:37:38,681 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:38] "GET /admin/camp HTTP/1.1" 200 -
+2025-04-03 14:37:38,723 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:38] "[36mGET /static/css/admin/camp.css HTTP/1.1[0m" 304 -
+2025-04-03 14:37:38,724 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:38] "[36mGET /static/js/admin/camp.js HTTP/1.1[0m" 304 -
+2025-04-03 14:37:38,734 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:38] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:37:38,740 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:38] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:37:38,754 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:38] "GET /admin/get_all_camps HTTP/1.1" 200 -
+2025-04-03 14:37:38,768 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:38] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:37:40,809 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:40] "GET /admin/user HTTP/1.1" 200 -
+2025-04-03 14:37:40,855 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:40] "[36mGET /static/css/admin/user.css HTTP/1.1[0m" 304 -
+2025-04-03 14:37:40,855 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:40] "[36mGET /static/js/admin/user.js HTTP/1.1[0m" 304 -
+2025-04-03 14:37:40,875 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:40] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:37:40,907 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:40] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:37:40,910 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:40] "GET /admin/get_all_users HTTP/1.1" 200 -
+2025-04-03 14:37:40,929 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:40] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:37:42,148 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:42] "GET /admin/warehouse HTTP/1.1" 200 -
+2025-04-03 14:37:42,215 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:42] "[36mGET /static/css/admin/warehouse.css HTTP/1.1[0m" 304 -
+2025-04-03 14:37:42,217 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:42] "[36mGET /static/js/admin/warehouse.js HTTP/1.1[0m" 304 -
+2025-04-03 14:37:42,237 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:42] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:37:42,249 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:42] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:37:42,259 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:42] "GET /admin/get_all_warehouses HTTP/1.1" 200 -
+2025-04-03 14:37:42,270 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:42] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:37:44,121 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:44] "GET /admin/sensor HTTP/1.1" 200 -
+2025-04-03 14:37:44,173 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:44] "[36mGET /static/css/admin/sensor.css HTTP/1.1[0m" 304 -
+2025-04-03 14:37:44,187 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:44] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:37:44,205 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:44] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:37:44,233 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:44] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:37:46,263 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:46] "GET /admin/warehouse HTTP/1.1" 200 -
+2025-04-03 14:37:46,310 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:46] "[36mGET /static/css/admin/warehouse.css HTTP/1.1[0m" 304 -
+2025-04-03 14:37:46,316 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:46] "[36mGET /static/js/admin/warehouse.js HTTP/1.1[0m" 304 -
+2025-04-03 14:37:46,328 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:46] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:37:46,340 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:46] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:37:46,347 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:46] "GET /admin/get_all_warehouses HTTP/1.1" 200 -
+2025-04-03 14:37:46,361 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:46] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:37:49,261 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:49] "GET /admin/user HTTP/1.1" 200 -
+2025-04-03 14:37:49,298 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:49] "[36mGET /static/css/admin/user.css HTTP/1.1[0m" 304 -
+2025-04-03 14:37:49,298 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:49] "[36mGET /static/js/admin/user.js HTTP/1.1[0m" 304 -
+2025-04-03 14:37:49,309 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:49] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:37:49,316 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:49] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:37:49,337 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:49] "GET /admin/get_all_users HTTP/1.1" 200 -
+2025-04-03 14:37:49,338 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:49] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:37:54,381 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:54] "GET /admin/camp HTTP/1.1" 200 -
+2025-04-03 14:37:54,438 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:54] "[36mGET /static/css/admin/camp.css HTTP/1.1[0m" 304 -
+2025-04-03 14:37:54,440 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:54] "[36mGET /static/js/admin/camp.js HTTP/1.1[0m" 304 -
+2025-04-03 14:37:54,463 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:54] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:37:54,483 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:54] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:37:54,514 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:54] "GET /admin/get_all_camps HTTP/1.1" 200 -
+2025-04-03 14:37:54,527 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:54] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:37:58,269 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:58] "GET /admin/user HTTP/1.1" 200 -
+2025-04-03 14:37:58,311 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:58] "[36mGET /static/js/admin/user.js HTTP/1.1[0m" 304 -
+2025-04-03 14:37:58,311 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:58] "[36mGET /static/css/admin/user.css HTTP/1.1[0m" 304 -
+2025-04-03 14:37:58,325 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:58] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-04-03 14:37:58,349 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:58] "GET /admin/get_all_users HTTP/1.1" 200 -
+2025-04-03 14:37:58,352 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:58] "[36mGET /static/images/forest.png HTTP/1.1[0m" 304 -
+2025-04-03 14:37:58,374 - INFO - 127.0.0.1 - - [03/Apr/2025 14:37:58] "[36mGET /static/site.webmanifest HTTP/1.1[0m" 304 -
+2025-04-03 14:38:14,897 - INFO - 127.0.0.1 - - [03/Apr/2025 14:38:14] "[35m[1mPOST /admin/add_user HTTP/1.1[0m" 201 -
+2025-04-03 14:38:14,915 - INFO - 127.0.0.1 - - [03/Apr/2025 14:38:14] "GET /admin/get_all_users HTTP/1.1" 200 -
