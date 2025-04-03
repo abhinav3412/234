@@ -81,21 +81,38 @@ function startTypewriter() {
 function updateVolunteerHistory(user_id){
     const url = `/user/volunteer/get_volunteer_history/${user_id}`;
     const historyList = document.getElementById('history-list');
+    
     fetch(url)
-    .then(response => response.json())
-    .then(data => {
-        if(data.status === 'success'){
-            const history = data.volunteer_history;
-            console.log("\n\n\n\n\n\nHistory", history);
-            historyList.innerHTML = '';
-            history.forEach(volunteer => {
-                const li = document.createElement('li');
-                li.textContent = `You volunteered as ${volunteer.role} at Camp : ${volunteer.camp_name}, ${volunteer.location} on ${volunteer.vdate}`;
-                historyList.appendChild(li);
-            });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch volunteer history');
         }
-    })    
+        return response.json();
+    })
+    .then(history => {
+        historyList.innerHTML = '';
+        
+        if (history.length === 0) {
+            const li = document.createElement('li');
+            li.textContent = 'No volunteer history found.';
+            li.style.color = 'gray';
+            li.style.fontStyle = 'italic';
+            historyList.appendChild(li);
+            return;
+        }
 
+        history.forEach(record => {
+            const li = document.createElement('li');
+            const status = record.status ? ` (${record.status})` : '';
+            const endDate = record.end_date ? ` until ${record.end_date}` : '';
+            li.textContent = `You volunteered as ${record.role} at ${record.camp_name} on ${record.created_at}${status}${endDate}`;
+            historyList.appendChild(li);
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching volunteer history:', error);
+        historyList.innerHTML = '<li style="color: red;">Error loading volunteer history.</li>';
+    });
 }
 
 

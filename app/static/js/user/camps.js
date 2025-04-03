@@ -17,10 +17,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            initializeAppWithCamps();
+            // Update the map with the first camp
+            if (camps[0]) {
+                initMap(camps[0]);
+            }
+
+            // Update the camp details
+            updateCampDetails();
+
+            // Initialize the chart with the first camp's data
+            if (camps[0]) {
+                initializeChart(camps[0].food_capacity, camps[0].water_capacity);
+            }
+
+            // Add event listeners
+            addEventListeners();
+
         } catch (error) {
             console.error("Error fetching camps:", error);
-            alert("Error fetching camps.");
+            alert("Error: Failed to fetch camp data");
         }
     }
 
@@ -34,12 +49,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Initialize Map
     function initMap(camp) {
-        if (!camp || !camp.coordinates) {
+        if (!camp || !camp.coordinates_lat || !camp.coordinates_lng) {
             console.error("Invalid camp data for map initialization.");
             return;
         }
 
-        const center = [camp.coordinates.lat, camp.coordinates.lng];
+        const center = [camp.coordinates_lat, camp.coordinates_lng];
 
         if (!map) { 
             map = L.map("map").setView(center, 12);
@@ -58,9 +73,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (currentCampIndex >= camps.length) return;
 
         const currentCamp = camps[currentCampIndex];
-        if (!currentCamp || !currentCamp.coordinates) return;
+        if (!currentCamp || !currentCamp.coordinates_lat || !currentCamp.coordinates_lng) return;
 
-        const center = [currentCamp.coordinates.lat, currentCamp.coordinates.lng];
+        const center = [currentCamp.coordinates_lat, currentCamp.coordinates_lng];
 
         map.setView(center, 12);
 
@@ -88,9 +103,9 @@ document.addEventListener("DOMContentLoaded", () => {
         resourcesChart = new Chart(ctx, {
             type: "bar",
             data: {
-                labels: ["Food (meals)", "Water (liters)"],
+                labels: ["Food Capacity (kg)", "Water Capacity (liters)"],
                 datasets: [{
-                    label: "Resources Available",
+                    label: "Camp Resources Capacity",
                     data: [food, water],
                     backgroundColor: ["rgba(75, 192, 192, 0.6)", "rgba(153, 102, 255, 0.6)"],
                     borderColor: ["rgba(75, 192, 192, 1)", "rgba(153, 102, 255, 1)"],
@@ -100,7 +115,19 @@ document.addEventListener("DOMContentLoaded", () => {
             options: {
                 responsive: true,
                 scales: {
-                    y: { beginAtZero: true }
+                    y: { 
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Capacity'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Camp Resource Capacities'
+                    }
                 }
             }
         });
@@ -112,15 +139,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const currentCamp = camps[currentCampIndex];
 
-        document.getElementById("camp-id").textContent = currentCamp.cid || "N/A";
-        document.getElementById("camp-location").textContent = currentCamp.location || "N/A";
-        document.getElementById("camp-status").textContent = currentCamp.status || "N/A";
-        document.getElementById("camp-capacity").textContent = `${currentCamp.num_people_present || 0} / ${currentCamp.capacity || 0} people`;
-        document.getElementById("camp-food").textContent = `${currentCamp.food_stock_quota || 0} meals`;
-        document.getElementById("camp-water").textContent = `${currentCamp.water_stock_litres || 0} liters`;
-        document.getElementById("camp-contact").textContent = currentCamp.contact_number || "N/A";
+        // Update basic camp information
+        const elements = {
+            "camp-id": currentCamp.cid || "N/A",
+            "camp-location": currentCamp.location || "N/A",
+            "camp-status": currentCamp.status || "N/A",
+            "camp-capacity": `${currentCamp.current_occupancy || 0} / ${currentCamp.capacity || 0} people`,
+            "camp-food": `${currentCamp.food_capacity || 0} kg`,
+            "camp-water": `${currentCamp.water_capacity || 0} liters`,
+            "camp-contact": currentCamp.contact_number || "N/A"
+        };
 
-        initializeChart(currentCamp.food_stock_quota, currentCamp.water_stock_litres);
+        // Update each element if it exists
+        Object.entries(elements).forEach(([id, value]) => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.textContent = value;
+            }
+        });
+
+        // Update chart with current capacity data
+        initializeChart(currentCamp.food_capacity, currentCamp.water_capacity);
+        
+        // Update map and notifications
         updateMap();
         fetchAndDisplayNotifications(currentCamp.cid);
     }

@@ -115,10 +115,19 @@ class VolunteerHistory(db.Model):
         db.ForeignKey('camps.cid', name='fk_volunteer_history_camp_cid', ondelete='SET NULL'),  # Named foreign key
         nullable=False
     )
-    role_id = db.Column(db.Integer, nullable=False)
-    vdate = db.Column(db.DateTime, default=db.func.current_timestamp())
+    role_id = db.Column(
+        db.String, 
+        db.ForeignKey('volunteer_role.role_id', name='fk_volunteer_history_role_role_id', ondelete='SET NULL'),
+        nullable=False
+    )
+    status = db.Column(db.String(20), default='active')
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    end_date = db.Column(db.DateTime, nullable=True)
+
+    # Relationships
     volunteer = db.relationship('Volunteer', backref='volunteer_history', lazy=True)
     camp = db.relationship('Camp', backref='volunteer_history', lazy=True)
+    role = db.relationship('VolunteerRole', backref='volunteer_history', lazy=True)
 
 
 class VolunteerRole(db.Model):

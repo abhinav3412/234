@@ -132,15 +132,20 @@ class CampManager:
                 "cid": camp.cid,
                 "name": camp.name,
                 "location": camp.location,
-                "coordinates": {
-                    "lat": camp.coordinates_lat,
-                    "lng": camp.coordinates_lng
-                },
-                "status": camp.status,
                 "capacity": camp.capacity,
-                "num_people_present": camp.num_people_present,
-                "food_stock_quota": camp.food_stock_quota,
-                "water_stock_litres": camp.water_stock_litres,
+                "current_occupancy": camp.current_occupancy,
+                "food_capacity": camp.food_capacity,
+                "water_capacity": camp.water_capacity,
+                "essentials_capacity": camp.essentials_capacity,
+                "clothes_capacity": camp.clothes_capacity,
+                "status": camp.status,
+                "camp_head_id": camp.camp_head_id,
+                "camp_head": {
+                    "uid": camp.camp_head.uid,
+                    "username": camp.camp_head.username
+                } if camp.camp_head else None,
+                "coordinates_lat": camp.coordinates_lat,
+                "coordinates_lng": camp.coordinates_lng,
                 "contact_number": camp.contact_number,
                 "people_list": camp.people_list
             }

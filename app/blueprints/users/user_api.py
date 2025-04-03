@@ -2,7 +2,7 @@ from . import user_bp
 from .utils import VolunteerForm
 from flask import jsonify, request
 from json import load as load_json
-from app.models import Camp, CampNotification, Donation
+from app.models import Camp, CampNotification, Donation, VolunteerHistory, Volunteer
 from flask_login import current_user, login_required
 from app.db_manager import CampManager, DonationManager, ForumManager, VolunteerManager
 import razorpay
@@ -47,19 +47,22 @@ def get_announcements(camp_id):
     """
     Fetch announcements for a specific camp.
     """
-    camp = Camp.query.get_or_404(camp_id)
-    announcements = CampNotification.query.filter_by(camp_id=camp_id).order_by(CampNotification.timestamp.desc()).all()
+    try:
+        camp = Camp.query.get_or_404(camp_id)
+        announcements = CampNotification.query.filter_by(camp_id=camp_id).order_by(CampNotification.created_at.desc()).all()
 
-    announcements_list = [
-        {
-            "id": a.aid,
-            "message": a.message,
-            "timestamp": a.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
-        }
-        for a in announcements
-    ]
+        announcements_list = [
+            {
+                "id": a.id,
+                "message": a.message,
+                "timestamp": a.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            }
+            for a in announcements
+        ]
 
-    return jsonify(announcements_list)
+        return jsonify(announcements_list)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @user_bp.route('/people-list/<int:camp_id>', methods=['GET'])
 @login_required
@@ -174,18 +177,37 @@ def submit_volunteer():
         return {"status": "success", "message": "Volunteer submitted successfully"}, 201
     return {"status": "error", "errors": "Error submitting volunteer"}, 400
 
-@user_bp.route('/volunteer/get_volunteer_history/<int:user_id>', methods=['GET'])
+@user_bp.route('/volunteer/get_volunteer_history/<int:user_id>')
 @login_required
 def get_volunteer_history(user_id):
     """
-    Fetch data for a specific volunteer.
+    Fetch volunteer history for a specific user.
     """
-    history_records = VolunteerManager.get_volunteer_history(user_id)
-    
-    if not history_records:
-        return jsonify({"status": "error", "message": "Volunteer record not found for this user."}), 404
-    
-    return jsonify({"status": "success", "volunteer_history": history_records}), 200
+    try:
+        # Get the volunteer record for the user
+        volunteer = Volunteer.query.filter_by(user_id=user_id).first()
+        if not volunteer:
+            return jsonify([])
+
+        # Get the volunteer history
+        history = VolunteerHistory.query.filter_by(vid=volunteer.vid).order_by(VolunteerHistory.created_at.desc()).all()
+        
+        history_list = []
+        for h in history:
+            history_item = {
+                "id": h.vhid,
+                "camp_name": h.camp.name if h.camp else "Unknown Camp",
+                "role": h.role.role if h.role else "Unknown Role",
+                "status": h.status,
+                "created_at": h.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                "end_date": h.end_date.strftime('%Y-%m-%d %H:%M:%S') if h.end_date else None
+            }
+            history_list.append(history_item)
+        
+        return jsonify(history_list)
+    except Exception as e:
+        print(f"Error in get_volunteer_history: {str(e)}")  # Add logging
+        return jsonify({"error": str(e)}), 500
 
 
 ################## Donation APIs ##################
