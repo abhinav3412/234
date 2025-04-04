@@ -1,1 +1,26 @@
-[]
+[
+    {
+        "id": 1,
+        "name": "SREYAS KRISHNAN",
+        "latitude": 11.960518,
+        "longitude": 75.392917,
+        "soil_type": "sand",
+        "operational_status": "Active"
+    },
+    {
+        "id": 2,
+        "name": "Abhinav Dharmaraj",
+        "latitude": 11.9112262,
+        "longitude": 75.3479096,
+        "soil_type": "clay",
+        "operational_status": "Active"
+    },
+    {
+        "id": 3,
+        "name": "SREYAS KRISHNAN",
+        "latitude": 75.392918,
+        "longitude": 75.392918,
+        "soil_type": "clay",
+        "operational_status": "Maintenance"
+    }
+]

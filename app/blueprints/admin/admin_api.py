@@ -1,7 +1,7 @@
 from flask import flash, jsonify, redirect, request, url_for
 from flask_login import current_user, login_required
 from app.db_manager import UserManager, CampManager, get_user_activity, log_recent_activity
-from app.models import User, Warehouse, Camp
+from app.models import User, Warehouse, Camp, UserActivity
 from . import admin_bp
 from app.extensions import db
 
@@ -130,12 +130,15 @@ def delete_user(uid):
     Delete a user by their ID.
     """
     try:
-        deleted = UserManager.delete_user(uid)
-        if deleted:
-            log_recent_activity(user_id=current_user.uid, action=f"Deleted user with ID: {uid}")
-            return jsonify({'message': f'User {uid} deleted successfully'}), 200
+        user = User.query.get(uid)
+        if user:
+            username = user.username  # Store username before deletion
+            db.session.delete(user)
+            db.session.commit()
+            log_recent_activity(user_id=current_user.uid, action=f"Deleted user: {username} (ID: {uid})")
+            return jsonify({'message': f'User {username} deleted successfully'}), 200
         else:
-            return jsonify({'error': 'Failed to delete user'}), 400
+            return jsonify({'error': 'User not found'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -236,6 +239,13 @@ def add_camp():
         db.session.add(new_camp)
         db.session.commit()
         
+        # Update the user's associated_camp_id if a camp head is assigned
+        if new_camp.camp_head_id:
+            user = User.query.get(new_camp.camp_head_id)
+            if user:
+                user.associated_camp_id = new_camp.cid
+                db.session.commit()
+        
         # Return the created camp with camp head name
         return jsonify({
             "cid": new_camp.cid,
@@ -272,11 +282,25 @@ def update_camp(camp_id):
             if existing_camp:
                 return jsonify({"error": "Camp with this name already exists"}), 400
         
-        # Check if camp head is already assigned to another camp
-        if "camp_head_id" in data and data["camp_head_id"] and data["camp_head_id"] != camp.camp_head_id:
-            existing_camp_head = Camp.query.filter_by(camp_head_id=data["camp_head_id"]).first()
-            if existing_camp_head:
-                return jsonify({"error": "Camp head is already assigned to another camp"}), 400
+        # Handle camp head assignment/unassignment
+        if "camp_head_id" in data:
+            # If there's a current camp head, update their associated_camp_id to None
+            if camp.camp_head_id:
+                old_head = User.query.get(camp.camp_head_id)
+                if old_head:
+                    old_head.associated_camp_id = None
+            
+            # If assigning a new camp head
+            if data["camp_head_id"]:
+                # Check if camp head is already assigned to another camp
+                existing_camp_head = Camp.query.filter_by(camp_head_id=data["camp_head_id"]).first()
+                if existing_camp_head and existing_camp_head.cid != camp_id:
+                    return jsonify({"error": "Camp head is already assigned to another camp"}), 400
+                
+                # Update the new camp head's associated_camp_id
+                new_head = User.query.get(data["camp_head_id"])
+                if new_head:
+                    new_head.associated_camp_id = camp_id
         
         # Update camp fields
         for field in ["name", "location", "capacity", "coordinates_lat", "coordinates_lng", 
@@ -585,5 +609,27 @@ def get_camp_managers():
             "uid": manager.uid,
             "username": manager.username
         } for manager in camp_managers])
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@admin_bp.route('/get_recent_activities')
+@login_required
+def get_recent_activities():
+    """
+    Get all recent activities across all users.
+    """
+    try:
+        activities = UserActivity.query.order_by(UserActivity.timestamp.desc()).limit(10).all()
+        
+        activity_list = [
+            {
+                "id": activity.id,
+                "user_id": activity.user_id,
+                "action": activity.action,
+                "timestamp": activity.timestamp.strftime("%Y-%m-%d %H:%M:%S")
+            }
+            for activity in activities
+        ]
+        return jsonify(activity_list)
     except Exception as e:
         return jsonify({"error": str(e)}), 500

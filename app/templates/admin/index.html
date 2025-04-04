@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% block csscontent%}
     <link rel="stylesheet" href="{{ url_for('static',filename='css/admin/dashboard.css')}}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user/alert.css')}}" >
 {% endblock %}
 
 {% block content %}
   <div class="dashboard">
-    <!-- Top Row: Hero Section and Alerts -->
+    <!-- Top Row: Hero Section and Map -->
     <div class="top-row">
       <!-- Hero Section -->
       <section class="hero">
@@ -42,24 +44,32 @@
         </div>
       </section>
 
-      <!-- Alerts and Notifications -->
-      <section class="alerts">
-        <h2>Alerts</h2>
-        <ul>
-          <li class="high">Sensor 5678 offline.</li>
-          <li class="medium">Warehouse B low on food.</li>
-          <li class="low">User Alice inactive for 30 days.</li>
-        </ul>
+      <!-- Map Container -->
+      <section class="map-container glass">
+        <div id="map"></div>
       </section>
     </div>
 
-    <!-- Bottom Row: Sensor Activity, Sensor Status, and Recent Activities -->
+    <!-- Bottom Row: Alerts, Sensor Status, and Recent Activities -->
     <div class="bottom-row">
-      <!-- Sensor Activity -->
-      <section class="chart">
-        <h2>User Activity</h2>
-        <canvas id="userActivityChart"></canvas>
+      <!-- Alerts Section -->
+      <section id="alert-section" class="glass">
+        <h2>Alerts</h2>
+        <div id="alert-box">
+          <p id="alert-message"></p>
+        </div>
+        <audio id="alert-sound" src="{{ url_for('static',filename='alert-sound.mp3') }}"></audio>
       </section>
+
+      <!-- Mini Pop-Up Modal -->
+      <div id="popup-modal" class="popup-modal">
+        <div class="popup-content">
+          <h3>Alert Details</h3>
+          <p id="popup-message"></p>
+          <button id="confirm-share" class="share-btn">Share on WhatsApp</button>
+          <button id="cancel-share" class="cancel-btn">Cancel</button>
+        </div>
+      </div>
 
       <!-- Sensor Status -->
       <section class="chart">
@@ -70,11 +80,8 @@
       <!-- Recent Activities -->
       <section class="activity">
         <h2>Recent Activities</h2>
-        <ul>
-          <li>User John Doe added a new camp.</li>
-          <li>Sensor 1234 went offline.</li>
-          <li>Warehouse A is low on supplies.</li>
-          <li>New user registered: Jane Doe.</li>
+        <ul id="activity-list">
+          <!-- Activities will be loaded dynamically -->
         </ul>
       </section>
     </div>
@@ -82,6 +89,8 @@
 {% endblock %}
 
 {% block jscontent %}
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Make updateSensorCount globally accessible
         window.updateSensorCount = async function() {
@@ -99,6 +108,29 @@
                 console.error('Error updating sensor count:', error);
             }
         };
+
+        // Function to update activity list
+        async function updateActivityList() {
+            try {
+                const response = await fetch('/admin/get_recent_activities');
+                const activities = await response.json();
+                const activityList = document.getElementById('activity-list');
+                
+                activityList.innerHTML = ''; // Clear existing items
+                
+                activities.forEach(activity => {
+                    const li = document.createElement('li');
+                    li.textContent = activity.action;
+                    activityList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Error updating activity list:', error);
+            }
+        }
+
+        // Update activity list on page load and every 30 seconds
+        updateActivityList();
+        setInterval(updateActivityList, 30000);
     </script>
     <script src="{{ url_for('static', filename='js/admin/index.js') }}"></script>
 {% endblock %}

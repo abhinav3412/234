@@ -1,1 +1,194 @@
-[]
+[
+    {
+        "id": 1,
+        "name": "SREYAS KRISHNAN",
+        "latitude": 11.960518,
+        "longitude": 75.392917,
+        "soil_type": "sand",
+        "timestamp": "2025-04-03T16:03:08.234825",
+        "rainfall": 144.73,
+        "forecasted_rainfall": 53.33,
+        "soil_saturation": 60.73,
+        "slope": 38.61,
+        "seismic_activity": 2.55,
+        "status": "Warning",
+        "risk_level": "Medium",
+        "affected_radius": 4255,
+        "predicted_landslide_time": "Within 1 week - Expected at 10-04-2025 04:03 PM",
+        "trends": {
+            "rainfall": {
+                "trend": "stable",
+                "change_rate": 0,
+                "volatility": 0
+            },
+            "soil_saturation": {
+                "trend": "stable",
+                "change_rate": 0,
+                "volatility": 0
+            },
+            "slope": {
+                "trend": "stable",
+                "change_rate": 0,
+                "volatility": 0
+            },
+            "seismic_activity": {
+                "trend": "stable",
+                "change_rate": 0,
+                "volatility": 0
+            }
+        },
+        "soil_stability": {
+            "shear_strength": 0.15,
+            "factor_of_safety": 0.0,
+            "stability_index": 0.0,
+            "driving_force": 9794.55,
+            "resisting_force": 0.12,
+            "pore_pressure_ratio": 0.97
+        },
+        "operational_status": "Active"
+    },
+    {
+        "id": 2,
+        "name": "Abhinav Dharmaraj",
+        "latitude": 11.9112262,
+        "longitude": 75.3479096,
+        "soil_type": "clay",
+        "timestamp": "2025-04-03T16:03:08.236811",
+        "rainfall": 57.52,
+        "forecasted_rainfall": 94.12,
+        "soil_saturation": 56.48,
+        "slope": 38.34,
+        "seismic_activity": 2.42,
+        "status": "Alert",
+        "risk_level": "High",
+        "affected_radius": 8544,
+        "predicted_landslide_time": "Within 48 hours - Expected at 05-04-2025 04:03 PM",
+        "trends": {
+            "rainfall": {
+                "trend": "stable",
+                "change_rate": 0,
+                "volatility": 0
+            },
+            "soil_saturation": {
+                "trend": "stable",
+                "change_rate": 0,
+                "volatility": 0
+            },
+            "slope": {
+                "trend": "stable",
+                "change_rate": 0,
+                "volatility": 0
+            },
+            "seismic_activity": {
+                "trend": "stable",
+                "change_rate": 0,
+                "volatility": 0
+            }
+        },
+        "soil_stability": {
+            "shear_strength": 20.79,
+            "factor_of_safety": 0.0,
+            "stability_index": 0.0,
+            "driving_force": 10953.73,
+            "resisting_force": 16.31,
+            "pore_pressure_ratio": 0.72
+        },
+        "operational_status": "Active"
+    },
+    {
+        "id": 4,
+        "name": "SREYAS KRISHNAN",
+        "latitude": 75.392918,
+        "longitude": 75.392918,
+        "soil_type": "sand",
+        "timestamp": "2025-04-03T20:27:18.445537",
+        "rainfall": 72.8,
+        "forecasted_rainfall": 38.38,
+        "soil_saturation": 64.72,
+        "slope": 27.82,
+        "seismic_activity": 0.99,
+        "status": "Normal",
+        "risk_level": "Low",
+        "affected_radius": 0,
+        "predicted_landslide_time": "No immediate risk - Monitoring continues",
+        "trends": {
+            "rainfall": {
+                "trend": "stable",
+                "change_rate": 0,
+                "volatility": 0
+            },
+            "soil_saturation": {
+                "trend": "stable",
+                "change_rate": 0,
+                "volatility": 0
+            },
+            "slope": {
+                "trend": "stable",
+                "change_rate": 0,
+                "volatility": 0
+            },
+            "seismic_activity": {
+                "trend": "stable",
+                "change_rate": 0,
+                "volatility": 0
+            }
+        },
+        "soil_stability": {
+            "shear_strength": -0.58,
+            "factor_of_safety": -0.0,
+            "stability_index": 0.0,
+            "driving_force": 7325.25,
+            "resisting_force": -0.51,
+            "pore_pressure_ratio": 1.15
+        },
+        "operational_status": "Active"
+    },
+    {
+        "id": 3,
+        "name": "SREYAS KRISHNAN",
+        "latitude": 75.392918,
+        "longitude": 75.392918,
+        "soil_type": "clay",
+        "timestamp": "2025-04-03T20:37:24.924914",
+        "rainfall": 114.86,
+        "forecasted_rainfall": 52.05,
+        "soil_saturation": 59.22,
+        "slope": 18.69,
+        "seismic_activity": 6.59,
+        "status": "Alert",
+        "risk_level": "High",
+        "affected_radius": 9436,
+        "predicted_landslide_time": "Within 48 hours - Expected at 05-04-2025 08:37 PM",
+        "trends": {
+            "rainfall": {
+                "trend": "stable",
+                "change_rate": 0,
+                "volatility": 0
+            },
+            "soil_saturation": {
+                "trend": "stable",
+                "change_rate": 0,
+                "volatility": 0
+            },
+            "slope": {
+                "trend": "stable",
+                "change_rate": 0,
+                "volatility": 0
+            },
+            "seismic_activity": {
+                "trend": "stable",
+                "change_rate": 0,
+                "volatility": 0
+            }
+        },
+        "soil_stability": {
+            "shear_strength": 20.52,
+            "factor_of_safety": 0.0,
+            "stability_index": 0.0,
+            "driving_force": 5658.46,
+            "resisting_force": 19.44,
+            "pore_pressure_ratio": 0.81
+        },
+        "operational_status": "Maintenance"
+    }
+]

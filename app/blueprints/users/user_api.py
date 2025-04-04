@@ -2,11 +2,12 @@ from . import user_bp
 from .utils import VolunteerForm
 from flask import jsonify, request
 from json import load as load_json
-from app.models import Camp, CampNotification, Donation, VolunteerHistory, Volunteer
+from app.models import Camp, CampNotification, Donation, VolunteerHistory, Volunteer, UserRequest
 from flask_login import current_user, login_required
 from app.db_manager import CampManager, DonationManager, ForumManager, VolunteerManager
 import razorpay
 from datetime import datetime
+from app import db
 
 # Initialize Razorpay client
 razorpay_client = razorpay.Client(auth=("YOUR_RAZORPAY_KEY_ID", "YOUR_RAZORPAY_KEY_SECRET"))
@@ -15,9 +16,35 @@ razorpay_client = razorpay.Client(auth=("YOUR_RAZORPAY_KEY_ID", "YOUR_RAZORPAY_K
 
 @user_bp.route('/get_sensor_data')
 def get_sensor_data():
-    with open('app/static/sensor_data.json') as file:
-        data = load_json(file)
-    return jsonify(data)
+    try:
+        with open('app/static/data/sensor_data.json') as file:
+            data = load_json(file)
+        
+        # Create a dictionary to store the latest active sensor for each name
+        sensor_dict = {}
+        
+        # Process each sensor
+        for sensor in data:
+            name = sensor.get('name')
+            status = sensor.get('operational_status', 'Active')
+            
+            # Only process active sensors
+            if status == 'Active':
+                # If this name doesn't exist in our dictionary, or if this sensor is more recent
+                if name not in sensor_dict:
+                    sensor_dict[name] = sensor
+                else:
+                    # Compare timestamps if available, otherwise keep the first one
+                    current_time = sensor.get('last_reading', '')
+                    existing_time = sensor_dict[name].get('last_reading', '')
+                    if current_time > existing_time:
+                        sensor_dict[name] = sensor
+        
+        # Convert dictionary values back to list
+        active_sensors = list(sensor_dict.values())
+        return jsonify(active_sensors)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 ################## Camps APIs ##################
 
@@ -324,10 +351,12 @@ def get_alerts():
         with open('app/static/data/sensor_data.json') as file:
             sensor_data = load_json(file)
         
-        # Filter sensors with Alert or Warning status
+        # Filter sensors with Alert or Warning status AND are Active
         alerts = []
         for sensor in sensor_data:
-            if sensor['status'] in ['Alert', 'Warning']:
+            # Only include sensors that are Active and have Alert or Warning status
+            if (sensor['status'] in ['Alert', 'Warning'] and 
+                sensor.get('operational_status', 'Active') == 'Active'):
                 alerts.append({
                     'message': f"{sensor['name']}: {sensor['status']} - Predicted Landslide Time: {sensor['predicted_landslide_time']}",
                     'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
@@ -338,3 +367,78 @@ def get_alerts():
         return jsonify(alerts)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@user_bp.route('/request_camp_slot', methods=['POST'])
+@login_required
+def request_camp_slot():
+    """
+    Handle camp slot requests from users.
+    """
+    try:
+        data = request.get_json()
+        
+        # Validate required fields
+        required_fields = ['name', 'phone', 'number_slots', 'priority1']
+        if not all(field in data for field in required_fields):
+            return jsonify({
+                'success': False,
+                'message': 'Missing required fields'
+            }), 400
+            
+        # Validate number of slots
+        try:
+            number_slots = int(data['number_slots'])
+            if number_slots < 1 or number_slots > 6:
+                return jsonify({
+                    'success': False,
+                    'message': 'Number of slots must be between 1 and 6'
+                }), 400
+        except ValueError:
+            return jsonify({
+                'success': False,
+                'message': 'Invalid number of slots'
+            }), 400
+            
+        # Validate priority camps
+        priority1 = int(data['priority1'])
+        priority2 = int(data.get('priority2', 0)) if data.get('priority2') else None
+        priority3 = int(data.get('priority3', 0)) if data.get('priority3') else None
+        
+        # Check if priority camps exist and have capacity
+        camp1 = Camp.query.get(priority1)
+        if not camp1:
+            return jsonify({
+                'success': False,
+                'message': 'Priority 1 camp not found'
+            }), 404
+            
+        if camp1.current_occupancy + number_slots > camp1.capacity:
+            return jsonify({
+                'success': False,
+                'message': 'Priority 1 camp is at full capacity'
+            }), 400
+            
+        # Create the request record
+        new_request = UserRequest(
+            name=data['name'],
+            phone=data['phone'],
+            number_slots=number_slots,
+            camp_id=priority1,
+            priority=1,
+            status='Pending',
+            created_at=datetime.now()
+        )
+        
+        db.session.add(new_request)
+        db.session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'Camp slot request submitted successfully'
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': f'Error processing request: {str(e)}'
+        }), 500

@@ -58,7 +58,14 @@ def sensor():
             sensor_info = config.copy()
             # Find matching sensor data
             matching_data = next((data for data in sensor_data if data['id'] == config['id']), None)
+            
+            # Set the status from sensor data if available
             sensor_info['status'] = matching_data['status'] if matching_data else 'Initializing'
+            
+            # Ensure operational_status is included
+            if 'operational_status' not in sensor_info:
+                sensor_info['operational_status'] = 'Active'  # Default value
+                
             sensors_with_status.append(sensor_info)
         
         return render_template('admin/sensor.html', sensors=sensors_with_status)
@@ -70,24 +77,59 @@ def sensor():
 @login_required
 def add_sensor():
     try:
+        # Log received form data
+        print("Received form data:", request.form)
+        
         # Get form data
         sensor_name = request.form.get('sensor_name')
-        latitude = float(request.form.get('latitude'))
-        longitude = float(request.form.get('longitude'))
+        try:
+            latitude = float(request.form.get('latitude'))
+            longitude = float(request.form.get('longitude'))
+        except (TypeError, ValueError):
+            print("Invalid latitude or longitude format")
+            return jsonify({
+                'success': False, 
+                'message': 'Latitude and longitude must be valid numbers'
+            })
+
         soil_type = request.form.get('soil_type')
 
-        if not all([sensor_name, latitude, longitude, soil_type]):
+        print(f"Parsed values - name: {sensor_name}, lat: {latitude}, lng: {longitude}, soil: {soil_type}")
+
+        # Validate required fields
+        if not all([sensor_name, soil_type]):
+            print("Missing required fields")
             return jsonify({'success': False, 'message': 'All fields are required'})
+
+        # Validate latitude range (-90 to 90)
+        if not -90 <= latitude <= 90:
+            print(f"Invalid latitude value: {latitude}")
+            return jsonify({
+                'success': False, 
+                'message': 'Latitude must be between -90 and 90 degrees'
+            })
+
+        # Validate longitude range (-180 to 180)
+        if not -180 <= longitude <= 180:
+            print(f"Invalid longitude value: {longitude}")
+            return jsonify({
+                'success': False, 
+                'message': 'Longitude must be between -180 and 180 degrees'
+            })
 
         # Load existing sensor configs
         sensor_configs = load_sensor_configs()
+        print("Loaded existing configs:", sensor_configs)
         
-        # Check for duplicate coordinates
+        # Check for duplicate coordinates with a small tolerance (approximately 10 meters)
+        COORD_TOLERANCE = 0.0001  # roughly 10 meters
         for sensor in sensor_configs:
-            if sensor['latitude'] == latitude and sensor['longitude'] == longitude:
+            if (abs(sensor['latitude'] - latitude) < COORD_TOLERANCE and 
+                abs(sensor['longitude'] - longitude) < COORD_TOLERANCE):
+                print(f"Found duplicate coordinates at lat: {latitude}, lng: {longitude}")
                 return jsonify({
                     'success': False, 
-                    'message': 'A sensor already exists at these coordinates. Please choose a different location.'
+                    'message': 'A sensor already exists too close to these coordinates. Please choose a different location.'
                 })
         
         # Generate new sensor ID
@@ -99,24 +141,35 @@ def add_sensor():
             'name': sensor_name,
             'latitude': latitude,
             'longitude': longitude,
-            'soil_type': soil_type
+            'soil_type': soil_type,
+            'operational_status': 'Active'  # Set default operational status
         }
+        
+        print("Created new sensor config:", new_sensor)
         
         # Add new sensor to configs
         sensor_configs.append(new_sensor)
         
         # Save updated configs
         save_sensor_configs(sensor_configs)
+        print("Saved updated sensor configs")
         
         # Generate initial sensor data
         sensor_data = generate_sensor_data(new_sensor)
+        print("Generated initial sensor data:", sensor_data)
+        
+        if sensor_data is None:
+            print("Failed to generate sensor data")
+            return jsonify({'success': False, 'message': 'Failed to generate sensor data'})
         
         # Load existing sensor data
         existing_data = []
         try:
             with open(os.path.join('app', 'static', 'data', 'sensor_data.json'), 'r') as f:
                 existing_data = json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError):
+                print("Loaded existing sensor data:", len(existing_data), "sensors")
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            print("No existing sensor data found:", str(e))
             pass
         
         # Add new sensor data
@@ -124,12 +177,15 @@ def add_sensor():
         
         # Save updated sensor data
         save_sensor_data_to_json(existing_data)
+        print("Saved updated sensor data")
         
         return jsonify({'success': True, 'message': 'Sensor added successfully'})
         
     except ValueError as e:
+        print("ValueError:", str(e))
         return jsonify({'success': False, 'message': 'Invalid input values'})
     except Exception as e:
+        print("Unexpected error:", str(e))
         return jsonify({'success': False, 'message': str(e)})
 
 @admin_bp.route('/delete_sensor/<int:sensor_id>', methods=['POST'])
@@ -167,10 +223,173 @@ def delete_sensor(sensor_id):
 @login_required
 def get_sensors():
     try:
-        sensors = load_sensor_configs()
-        return jsonify(sensors)
+        # Load sensor configs with better error handling
+        try:
+            sensors = load_sensor_configs()
+            if not isinstance(sensors, list):
+                print("Warning: sensors is not a list, defaulting to empty list")
+                sensors = []
+        except Exception as e:
+            print(f"Error loading sensor configs: {str(e)}")
+            sensors = []
+        
+        # Load sensor data to get status information
+        try:
+            with open(os.path.join('app', 'static', 'data', 'sensor_data.json'), 'r') as f:
+                sensor_data = json.load(f)
+                if not isinstance(sensor_data, list):
+                    print("Warning: sensor_data is not a list, defaulting to empty list")
+                    sensor_data = []
+                # Filter out any null values
+                sensor_data = [s for s in sensor_data if s is not None]
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            print(f"Error loading sensor data: {str(e)}")
+            sensor_data = []
+        except Exception as e:
+            print(f"Unexpected error loading sensor data: {str(e)}")
+            sensor_data = []
+        
+        # Combine configs with their current status and affected radius
+        sensors_with_status = []
+        for config in sensors:
+            try:
+                sensor_info = config.copy()
+                # Find matching sensor data
+                matching_data = next((data for data in sensor_data if data['id'] == config['id']), None)
+                if matching_data:
+                    sensor_info.update({
+                        'status': matching_data.get('status', 'Normal'),
+                        'affected_radius': matching_data.get('affected_radius', 1000),
+                        'rainfall': matching_data.get('rainfall', 0),
+                        'forecasted_rainfall': matching_data.get('forecasted_rainfall', 0),
+                        'soil_saturation': matching_data.get('soil_saturation', 0),
+                        'slope': matching_data.get('slope', 0),
+                        'seismic_activity': matching_data.get('seismic_activity', 'None'),
+                        'risk_level': matching_data.get('risk_level', 'Low'),
+                        'predicted_landslide_time': matching_data.get('predicted_landslide_time', 'N/A'),
+                        'operational_status': matching_data.get('operational_status', config.get('operational_status', 'Active'))
+                    })
+                else:
+                    sensor_info.update({
+                        'status': 'Normal',
+                        'affected_radius': 1000,
+                        'rainfall': 0,
+                        'forecasted_rainfall': 0,
+                        'soil_saturation': 0,
+                        'slope': 0,
+                        'seismic_activity': 'None',
+                        'risk_level': 'Low',
+                        'predicted_landslide_time': 'N/A',
+                        'operational_status': config.get('operational_status', 'Active')
+                    })
+                sensors_with_status.append(sensor_info)
+            except Exception as e:
+                print(f"Error processing sensor {config.get('id', 'unknown')}: {str(e)}")
+                continue
+        
+        return jsonify(sensors_with_status)
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        print(f"Error in get_sensors route: {str(e)}")
+        return jsonify([]), 200  # Return empty array instead of error to prevent frontend issues
+
+@admin_bp.route('/get_sensor/<int:sensor_id>')
+@login_required
+def get_sensor(sensor_id):
+    """Get a specific sensor's details"""
+    try:
+        # Load sensor configs
+        sensor_configs = load_sensor_configs()
+        
+        # Find the sensor
+        sensor = next((s for s in sensor_configs if s['id'] == sensor_id), None)
+        
+        if sensor is None:
+            return jsonify({'success': False, 'message': 'Sensor not found'})
+            
+        # Return sensor details
+        return jsonify({
+            'success': True,
+            'sensor': {
+                'id': sensor['id'],
+                'name': sensor['name'],
+                'latitude': sensor['latitude'],
+                'longitude': sensor['longitude'],
+                'soil_type': sensor['soil_type'],
+                'operational_status': sensor.get('operational_status', 'Active')
+            }
+        })
+        
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
+
+@admin_bp.route('/update_sensor/<int:sensor_id>', methods=['POST'])
+@login_required
+def update_sensor(sensor_id):
+    try:
+        data = request.get_json()
+        
+        # Validate required fields
+        required_fields = ['name', 'latitude', 'longitude', 'soil_type', 'operational_status']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({'error': f'Missing required field: {field}'}), 400
+        
+        # Load current sensor configs
+        sensor_configs = load_sensor_configs()
+        
+        # Find the sensor to update
+        sensor_index = next((i for i, s in enumerate(sensor_configs) if s['id'] == sensor_id), None)
+        if sensor_index is None:
+            return jsonify({'error': 'Sensor not found'}), 404
+        
+        # Check for duplicate coordinates
+        for i, sensor in enumerate(sensor_configs):
+            if i != sensor_index and sensor['latitude'] == float(data['latitude']) and sensor['longitude'] == float(data['longitude']):
+                return jsonify({'error': 'A sensor already exists at these coordinates'}), 400
+        
+        # Update sensor config
+        sensor_configs[sensor_index].update({
+            'name': data['name'],
+            'latitude': float(data['latitude']),
+            'longitude': float(data['longitude']),
+            'soil_type': data['soil_type'],
+            'operational_status': data['operational_status']
+        })
+        
+        # Save updated configs
+        save_sensor_configs(sensor_configs)
+        
+        # Update sensor data if it exists
+        try:
+            with open(os.path.join('app', 'static', 'data', 'sensor_data.json'), 'r') as f:
+                sensor_data = json.load(f)
+            
+            # Find and update sensor data
+            for sensor in sensor_data:
+                if sensor['id'] == sensor_id:
+                    sensor.update({
+                        'name': data['name'],
+                        'latitude': float(data['latitude']),
+                        'longitude': float(data['longitude']),
+                        'soil_type': data['soil_type'],
+                        'operational_status': data['operational_status']
+                    })
+                    break
+            
+            # Save updated sensor data
+            with open(os.path.join('app', 'static', 'data', 'sensor_data.json'), 'w') as f:
+                json.dump(sensor_data, f, indent=4)
+                
+        except (FileNotFoundError, json.JSONDecodeError):
+            # If sensor data file doesn't exist or is invalid, that's okay
+            pass
+        
+        return jsonify({'message': 'Sensor updated successfully'})
+        
+    except ValueError as e:
+        return jsonify({'error': f'Invalid input value: {str(e)}'}), 400
+    except Exception as e:
+        return jsonify({'error': f'Error updating sensor: {str(e)}'}), 500
 
 # Commented out warehouse routes to avoid conflicts with admin_api.py
 # @admin_bp.route('/create_warehouse', methods=['POST'])

@@ -68,9 +68,9 @@ class CampManager:
         if camp:
             return {
                 "cid": camp.cid,
-                "camp_name": camp.camp_name,
-                "camp_head" : camp.camp_head.username,
-                "mobile": camp.camp_head.mobile,
+                "camp_name": camp.name,
+                "camp_head": camp.camp_head.username if camp.camp_head else "Not assigned",
+                "mobile": camp.camp_head.mobile if camp.camp_head else None,
                 "location": camp.location,
                 "coordinates": {
                     "lat": camp.coordinates_lat,
@@ -79,13 +79,13 @@ class CampManager:
                 "status": camp.status,
                 "capacity": camp.capacity,
                 "num_people_present": camp.num_people_present,
-                "food_stock_quota": camp.food_stock_quota,
-                "food_capacity" : camp.food_capacity,
-                "water_stock_litres": camp.water_stock_litres,
+                "food_stock_quota": camp.food_stock_quota if hasattr(camp, 'food_stock_quota') else 0,
+                "food_capacity": camp.food_capacity,
+                "water_stock_litres": camp.water_stock_litres if hasattr(camp, 'water_stock_litres') else 0,
                 "water_capacity": camp.water_capacity,
-                "clothes_stock": camp.clothes_stock,
+                "clothes_stock": camp.clothes_stock if hasattr(camp, 'clothes_stock') else 0,
                 "clothes_capacity": camp.clothes_capacity,
-                "essentials_stock": camp.essentials_stock,
+                "essentials_stock": camp.essentials_stock if hasattr(camp, 'essentials_stock') else 0,
                 "essentials_capacity": camp.essentials_capacity,
                 "contact_number": camp.contact_number,
                 "people_list": camp.people_list

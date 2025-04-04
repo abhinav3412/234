@@ -253,8 +253,39 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
-
+    // Function to fetch and populate camp options
+    async function populateCampOptions() {
+        try {
+            const response = await fetch('/user/list_all_camps');
+            if (!response.ok) throw new Error('Failed to fetch camps');
+            const campsData = await response.json();
+            
+            // Get all select elements for priority camps
+            const priority1Select = document.getElementById('priority1');
+            const priority2Select = document.getElementById('priority2');
+            const priority3Select = document.getElementById('priority3');
+            
+            // Clear existing options except the first one
+            priority1Select.innerHTML = '<option value="" disabled selected>Select a Camp</option>';
+            priority2Select.innerHTML = '<option value="" disabled selected>Select a Camp</option>';
+            priority3Select.innerHTML = '<option value="" disabled selected>Select a Camp</option>';
+            
+            // Add camp options to each select
+            campsData.forEach(camp => {
+                const option = document.createElement('option');
+                option.value = camp.cid;
+                option.textContent = `${camp.name} (${camp.location})`;
+                
+                // Clone the option for each select
+                priority1Select.appendChild(option.cloneNode(true));
+                priority2Select.appendChild(option.cloneNode(true));
+                priority3Select.appendChild(option.cloneNode(true));
+            });
+        } catch (error) {
+            console.error('Error fetching camps:', error);
+            alert('Failed to load camp options. Please try again later.');
+        }
+    }
 
     // Show/hide request form popup
     const requestSlotBtn = document.getElementById('request-slot-btn');
@@ -263,6 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     requestSlotBtn.addEventListener('click', () => {
         requestFormPopup.style.display = 'flex';
+        populateCampOptions(); // Populate options when opening the form
     });
 
     closeBtn.addEventListener('click', () => {
@@ -273,6 +305,44 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('click', (event) => {
         if (event.target === requestFormPopup) {
             requestFormPopup.style.display = 'none';
+        }
+    });
+
+    // Handle form submission
+    const requestForm = document.getElementById('request-form');
+    requestForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = {
+            name: document.getElementById('name').value,
+            phone: document.getElementById('phone').value,
+            number_slots: document.querySelector('.number_slot').value,
+            priority1: document.getElementById('priority1').value,
+            priority2: document.getElementById('priority2').value,
+            priority3: document.getElementById('priority3').value
+        };
+
+        try {
+            const response = await fetch('/user/request_camp_slot', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+            
+            if (data.success) {
+                alert('Camp slot request submitted successfully!');
+                requestFormPopup.style.display = 'none';
+                requestForm.reset();
+            } else {
+                alert(data.message || 'Failed to submit request. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error submitting request:', error);
+            alert('Failed to submit request. Please try again later.');
         }
     });
 

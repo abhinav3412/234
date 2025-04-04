@@ -1,5 +1,11 @@
+import os
+import sys
+
+# Add the parent directory to the Python path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from app import create_app, db
-from app.models import User, Camp, Warehouse, Vehicle, CampNotification
+from app.models import User, Camp, Warehouse, Vehicle, CampNotification, UserRequest
 from datetime import datetime
 
 def init_db():

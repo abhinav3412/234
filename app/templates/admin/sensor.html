@@ -32,11 +32,12 @@
                         <td>{{ sensor.longitude }}</td>
                         <td>{{ sensor.soil_type }}</td>
                         <td>
-                            <span class="status-{{ sensor.status.lower() if sensor.status else 'unknown' }}">
-                                {{ sensor.status if sensor.status else 'Initializing...' }}
+                            <span class="status-{{ sensor.operational_status.lower() if sensor.operational_status else 'unknown' }}">
+                                {{ sensor.operational_status if sensor.operational_status else 'Initializing...' }}
                             </span>
                         </td>
-                        <td>
+                        <td class="action-buttons">
+                            <button class="edit-btn" data-sensor-id="{{ sensor.id }}">Edit</button>
                             <button class="delete-btn" onclick="deleteSensor({{ sensor.id }})">Delete</button>
                         </td>
                     </tr>
@@ -55,26 +56,86 @@
         <form id="sensorForm" method="POST" action="{{ url_for('admin.add_sensor') }}">
             <div class="form-group">
                 <label for="sensor_name">Sensor Name</label>
-                <input type="text" id="sensor_name" name="sensor_name" required>
+                <input type="text" id="sensor_name" name="sensor_name" required 
+                       minlength="3" maxlength="50" pattern="[A-Za-z0-9\s\-_]+"
+                       title="Sensor name can contain letters, numbers, spaces, hyphens and underscores">
             </div>
             <div class="form-group">
                 <label for="latitude">Latitude</label>
-                <input type="number" id="latitude" name="latitude" step="any" required>
+                <input type="number" id="latitude" name="latitude" step="0.000001" required 
+                       min="-90" max="90"
+                       oninput="validateCoordinates()"
+                       title="Latitude must be between -90 and 90 degrees">
+                <small class="validation-message" id="lat-validation"></small>
             </div>
             <div class="form-group">
                 <label for="longitude">Longitude</label>
-                <input type="number" id="longitude" name="longitude" step="any" required>
+                <input type="number" id="longitude" name="longitude" step="0.000001" required 
+                       min="-180" max="180"
+                       oninput="validateCoordinates()"
+                       title="Longitude must be between -180 and 180 degrees">
+                <small class="validation-message" id="lng-validation"></small>
             </div>
             <div class="form-group">
                 <label for="soil_type">Soil Type</label>
                 <select id="soil_type" name="soil_type" required>
+                    <option value="">Select soil type</option>
                     <option value="clay">Clay</option>
                     <option value="sand">Sand</option>
                     <option value="loam">Loam</option>
                     <option value="silt">Silt</option>
                 </select>
             </div>
-            <button type="submit" class="btn-submit">Add Sensor</button>
+            <button type="submit" class="btn-submit" id="submitBtn">Add Sensor</button>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Sensor Modal -->
+<div id="editSensorModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Edit Sensor</h2>
+        <form id="editSensorForm">
+            <input type="hidden" id="edit_sensor_id" name="sensor_id">
+            <div class="form-group">
+                <label for="edit_sensor_name">Sensor Name</label>
+                <input type="text" id="edit_sensor_name" name="sensor_name" required 
+                       title="Enter the name of the sensor" placeholder="Enter sensor name">
+            </div>
+            <div class="form-group">
+                <label for="edit_latitude">Latitude</label>
+                <input type="number" step="any" id="edit_latitude" name="latitude" required 
+                       title="Enter the latitude coordinate" placeholder="Enter latitude">
+            </div>
+            <div class="form-group">
+                <label for="edit_longitude">Longitude</label>
+                <input type="number" step="any" id="edit_longitude" name="longitude" required 
+                       title="Enter the longitude coordinate" placeholder="Enter longitude">
+            </div>
+            <div class="form-group">
+                <label for="edit_soil_type">Soil Type</label>
+                <select id="edit_soil_type" name="soil_type" required 
+                        title="Select the type of soil" aria-label="Select soil type">
+                    <option value="clay">Clay</option>
+                    <option value="sand">Sand</option>
+                    <option value="silt">Silt</option>
+                    <option value="loam">Loam</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="edit_operational_status">Operational Status</label>
+                <select id="edit_operational_status" name="operational_status" required 
+                        title="Select the operational status" aria-label="Select operational status">
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                    <option value="Maintenance">Maintenance</option>
+                </select>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn-cancel" onclick="closeEditModal()">Cancel</button>
+                <button type="button" class="btn-submit" onclick="updateSensor()">Save Changes</button>
+            </div>
         </form>
     </div>
 </div>
@@ -84,31 +145,103 @@
 <script>
 // Get modal elements
 const modal = document.getElementById("sensorModal");
+const editModal = document.getElementById("editSensorModal");
 const addBtn = document.getElementById("addSensorBtn");
-const closeBtn = document.getElementsByClassName("close")[0];
+const closeBtns = document.getElementsByClassName("close");
+const submitBtn = document.getElementById("submitBtn");
+
+// Coordinate validation function
+function validateCoordinates() {
+    const latInput = document.getElementById('latitude');
+    const lngInput = document.getElementById('longitude');
+    const latValidation = document.getElementById('lat-validation');
+    const lngValidation = document.getElementById('lng-validation');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    let isValid = true;
+    
+    // Validate latitude
+    const lat = parseFloat(latInput.value);
+    if (isNaN(lat)) {
+        latValidation.textContent = 'Please enter a valid number';
+        latValidation.style.color = 'red';
+        isValid = false;
+    } else if (lat < -90 || lat > 90) {
+        latValidation.textContent = 'Latitude must be between -90 and 90 degrees';
+        latValidation.style.color = 'red';
+        isValid = false;
+    } else {
+        latValidation.textContent = 'Valid latitude';
+        latValidation.style.color = 'green';
+    }
+    
+    // Validate longitude
+    const lng = parseFloat(lngInput.value);
+    if (isNaN(lng)) {
+        lngValidation.textContent = 'Please enter a valid number';
+        lngValidation.style.color = 'red';
+        isValid = false;
+    } else if (lng < -180 || lng > 180) {
+        lngValidation.textContent = 'Longitude must be between -180 and 180 degrees';
+        lngValidation.style.color = 'red';
+        isValid = false;
+    } else {
+        lngValidation.textContent = 'Valid longitude';
+        lngValidation.style.color = 'green';
+    }
+    
+    // Enable/disable submit button based on validation
+    submitBtn.disabled = !isValid;
+    return isValid;
+}
 
 // Open modal when clicking the Add New Sensor button
 addBtn.onclick = function() {
     modal.style.display = "block";
+    // Reset validation messages
+    document.getElementById('lat-validation').textContent = '';
+    document.getElementById('lng-validation').textContent = '';
 }
 
-// Close modal when clicking the X button
-closeBtn.onclick = function() {
-    modal.style.display = "none";
+// Close modals when clicking the X button
+for (let i = 0; i < closeBtns.length; i++) {
+    closeBtns[i].onclick = function() {
+        modal.style.display = "none";
+        editModal.style.display = "none";
+    }
 }
 
-// Close modal when clicking outside
+// Close modals when clicking outside
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
+    if (event.target == editModal) {
+        editModal.style.display = "none";
+    }
+}
+
+// Function to close edit modal
+function closeEditModal() {
+    editModal.style.display = "none";
 }
 
 // Handle form submission
 document.getElementById('sensorForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
+    // Validate coordinates before submission
+    if (!validateCoordinates()) {
+        return;
+    }
+    
     const formData = new FormData(this);
+    
+    // Show loading state
+    const submitButton = this.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+    submitButton.textContent = 'Adding...';
+    submitButton.disabled = true;
     
     fetch(this.action, {
         method: 'POST',
@@ -117,21 +250,151 @@ document.getElementById('sensorForm').addEventListener('submit', function(e) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert('Sensor added successfully!');
-            // Update sensor count on admin dashboard
-            const adminDashboard = window.opener;
-            if (adminDashboard) {
-                adminDashboard.updateSensorCount();
-            }
-            location.reload();
+            // Show success message
+            const successMessage = document.createElement('div');
+            successMessage.className = 'alert alert-success';
+            successMessage.textContent = 'Sensor added successfully!';
+            this.insertBefore(successMessage, this.firstChild);
+            
+            // Reset form
+            this.reset();
+            
+            // Close modal after a short delay
+            setTimeout(() => {
+                modal.style.display = "none";
+                location.reload(); // Refresh to show new sensor
+            }, 1500);
         } else {
-            alert('Error adding sensor: ' + data.message);
+            // Show error message
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'alert alert-danger';
+            errorMessage.textContent = data.message || 'Error adding sensor';
+            this.insertBefore(errorMessage, this.firstChild);
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Error adding sensor. Please try again.');
+        // Show error message
+        const errorMessage = document.createElement('div');
+        errorMessage.className = 'alert alert-danger';
+        errorMessage.textContent = 'Error adding sensor. Please try again.';
+        this.insertBefore(errorMessage, this.firstChild);
+    })
+    .finally(() => {
+        // Reset button state
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+        
+        // Remove any messages after 3 seconds
+        setTimeout(() => {
+            const alerts = this.querySelectorAll('.alert');
+            alerts.forEach(alert => alert.remove());
+        }, 3000);
     });
+});
+
+// Add event listeners to all edit buttons
+document.addEventListener('DOMContentLoaded', function() {
+    const editButtons = document.querySelectorAll('.edit-btn');
+    editButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const sensorId = this.getAttribute('data-sensor-id');
+            editSensor(sensorId);
+        });
+    });
+});
+
+// Function to edit sensor
+function editSensor(sensorId) {
+    // Get the sensor data
+    fetch(`/admin/get_sensor/${sensorId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (!data.success) {
+                throw new Error(data.message || 'Error loading sensor data');
+            }
+            
+            const sensor = data.sensor;
+            
+            // Populate the edit form
+            document.getElementById('edit_sensor_id').value = sensor.id;
+            document.getElementById('edit_sensor_name').value = sensor.name;
+            document.getElementById('edit_latitude').value = sensor.latitude;
+            document.getElementById('edit_longitude').value = sensor.longitude;
+            document.getElementById('edit_soil_type').value = sensor.soil_type;
+            document.getElementById('edit_operational_status').value = sensor.operational_status || 'Active';
+            
+            // Show the edit modal
+            document.getElementById('editSensorModal').style.display = 'block';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error loading sensor data: ' + error.message);
+        });
+}
+
+// Function to update sensor
+function updateSensor() {
+    const sensorId = document.getElementById('edit_sensor_id').value;
+    const formData = {
+        name: document.getElementById('edit_sensor_name').value,
+        latitude: document.getElementById('edit_latitude').value,
+        longitude: document.getElementById('edit_longitude').value,
+        soil_type: document.getElementById('edit_soil_type').value,
+        operational_status: document.getElementById('edit_operational_status').value
+    };
+
+    console.log('Updating sensor:', sensorId, formData);
+
+    // Ensure sensorId is a valid number
+    if (!sensorId || isNaN(sensorId)) {
+        alert('Invalid sensor ID');
+        return;
+    }
+
+    // Construct the URL with the correct path
+    const url = `/admin/update_sensor/${sensorId}`;
+    console.log('Request URL:', url);
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        console.log('Response status:', response.status);
+        if (!response.ok) {
+            return response.text().then(text => {
+                console.error('Error response:', text);
+                throw new Error(`HTTP error! status: ${response.status}`);
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Response data:', data);
+        if (data.error) {
+            alert(data.error);
+        } else {
+            // Close the modal
+            document.getElementById('editSensorModal').style.display = 'none';
+            // Reload the page to show updated data
+            location.reload();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error updating sensor: ' + error.message);
+    });
+}
+
+// Handle edit form submission
+document.getElementById('editSensorForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    updateSensor();
 });
 
 // Function to delete sensor
@@ -148,11 +411,6 @@ async function deleteSensor(sensorId) {
         
         if (data.success) {
             alert('Sensor deleted successfully!');
-            // Update sensor count on admin dashboard
-            const adminDashboard = window.opener;
-            if (adminDashboard) {
-                adminDashboard.updateSensorCount();
-            }
             location.reload();
         } else {
             alert('Error deleting sensor: ' + data.message);

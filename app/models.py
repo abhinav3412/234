@@ -23,7 +23,8 @@ class User(UserMixin, db.Model):
     
     # Relationships
     associated_camp = db.relationship('Camp', foreign_keys=[associated_camp_id], backref='users')
-    managed_warehouse = db.relationship('Warehouse', foreign_keys='Warehouse.manager_id', backref='user_manager', uselist=False)
+    associated_warehouse = db.relationship('Warehouse', foreign_keys=[associated_warehouse_id], backref='associated_users')
+    managed_warehouse = db.relationship('Warehouse', foreign_keys='Warehouse.manager_id', back_populates='manager', uselist=False)
     donation = db.relationship("Donation", back_populates="user", lazy=True)
     donation_amount = db.relationship("DonationAmount", backref="user", lazy=True)
 
@@ -55,6 +56,10 @@ class Camp(db.Model):
     water_capacity = db.Column(db.Integer, default=0)  # in liters
     essentials_capacity = db.Column(db.Integer, default=0)  # in kits
     clothes_capacity = db.Column(db.Integer, default=0)  # in sets
+    food_stock_quota = db.Column(db.Integer, default=0)  # in kg
+    water_stock_litres = db.Column(db.Integer, default=0)  # in liters
+    essentials_stock = db.Column(db.Integer, default=0)  # in kits
+    clothes_stock = db.Column(db.Integer, default=0)  # in sets
     status = db.Column(db.String(20), default='active')
     camp_head_id = db.Column(db.Integer, db.ForeignKey('users.uid'))
     coordinates_lat = db.Column(db.Float, nullable=False)
@@ -268,7 +273,7 @@ class Warehouse(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Add relationship to manager
-    manager = db.relationship('User', backref='warehouse_manager', foreign_keys=[manager_id])
+    manager = db.relationship('User', foreign_keys=[manager_id], back_populates='managed_warehouse')
     
     def __repr__(self):
         return f'<Warehouse {self.name}>'
@@ -282,6 +287,7 @@ class Sensor(db.Model):
     longitude = db.Column(db.Float, nullable=False)
     soil_type = db.Column(db.String(50), nullable=False)
     status = db.Column(db.String(20), default='Active')
+    operational_status = db.Column(db.String(20), default='Active')  # New field for operational status
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     last_reading = db.Column(db.DateTime)
     moisture_level = db.Column(db.Float)
@@ -301,3 +307,20 @@ class Vehicle(db.Model):
     
     def __repr__(self):
         return f'<Vehicle {self.vehicle_id}>'
+
+
+class UserRequest(db.Model):
+    """Model for user requests for camp slots."""
+    __tablename__ = 'user_requests'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    phone = db.Column(db.String(20), nullable=False)
+    number_slots = db.Column(db.Integer, nullable=False)
+    camp_id = db.Column(db.Integer, db.ForeignKey('camps.cid'), nullable=False)
+    priority = db.Column(db.Integer, nullable=False)  # 1 for first priority, 2 for second, etc.
+    status = db.Column(db.String(20), nullable=False, default='Pending')  # Pending, Approved, Rejected
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    
+    # Relationship with Camp
+    camp = db.relationship('Camp', backref=db.backref('user_requests', lazy=True))

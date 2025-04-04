@@ -2,16 +2,17 @@
 
 {% block csscontent %}
 <link rel="stylesheet" href="{{ url_for('static', filename='/css/camp_manager/index.css')}}" >
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 {% endblock %}
 
 {% block content %}
-<div class="overflow-allowed">
-<!-- Heading with Typewriter Effect -->
-<div class="heading">
-    <span class="static-text">Welcome Camp Head. </span>
+<body>
+  <!-- Heading with Typewriter Effect -->
+  <div class="heading">
+    <span class="static-text">Welcome Camp Head . </span>
     <span class="typewriter-text"></span>
   </div>
-
   <!-- Logout Button -->
   <a class="logout" href="{{ url_for('auth.logout') }}">Logout</a>
 
@@ -36,7 +37,7 @@
       <h2>User Requests</h2>
       <div class="scrollable">
         <ul id="requests-list">
-          <!-- Data will be populated by JavaScript -->
+          <!-- User requests will be populated by JavaScript -->
         </ul>
       </div>
     </div>
@@ -45,12 +46,35 @@
     <div class="box">
       <h2>Camp Details</h2>
       <div class="camp-details">
-        
+        <div class="detail-item">
+          <i class="fas fa-id-badge"></i>
+          <span><strong>Camp ID:</strong> {{ camp.cid }}</span>
+        </div>
+        <div class="detail-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span><strong>Location:</strong> {{ camp.location }}</span>
+        </div>
+        <div class="detail-item">
+          <i class="fas fa-users"></i>
+          <span><strong>Capacity:</strong> {{ camp.capacity }} people</span>
+        </div>
+        <div class="detail-item">
+          <i class="fas fa-user-friends"></i>
+          <span><strong>Current Occupancy:</strong> {{ camp.current_occupancy }} people</span>
+        </div>
+        <div class="detail-item">
+          <i class="fas fa-user"></i>
+          <span><strong>Camp Head:</strong> {{ current_user.username }}</span>
+        </div>
+        <div class="detail-item">
+          <i class="fas fa-phone"></i>
+          <span><strong>Phone:</strong> {{ camp.contact_number or 'Not provided' }}</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Second Row -->
+  <!-- Second Row: People List and Request Supplies -->
   <div class="row">
     <!-- Box 1: People Capacity (Doughnut Graph) -->
     <div class="box">
@@ -65,11 +89,11 @@
       <h2>Food & Water</h2>
       <div class="resource-details">
         <i class="fas fa-utensils"></i>
-        <p><strong>Food Remaining:</strong> 0 kg</p>
-        <p><strong>Food Capacity:</strong> 0 kg</p>
+        <p><strong>Food Remaining:</strong> <span id="food-remaining">0</span> kg</p>
+        <p><strong>Food Capacity:</strong> {{ camp.food_capacity }} kg</p>
         <i class="fas fa-tint"></i>
-        <p><strong>Water Remaining:</strong> 0 L</p>
-        <p><strong>Water Capacity:</strong> 0 L</p>
+        <p><strong>Water Remaining:</strong> <span id="water-remaining">0</span> L</p>
+        <p><strong>Water Capacity:</strong> {{ camp.water_capacity }} L</p>
       </div>
     </div>
 
@@ -78,11 +102,11 @@
       <h2>Clothes & Essentials</h2>
       <div class="resource-details">
         <i class="fas fa-tshirt"></i>
-        <p><strong>Clothes:</strong> 0 sets</p>
-        <p><strong>Capacity:</strong> 0 sets</p>
+        <p><strong>Clothes:</strong> <span id="clothes-remaining">0</span> sets</p>
+        <p><strong>Capacity:</strong> {{ camp.clothes_capacity }} sets</p>
         <i class="fas fa-first-aid"></i>
-        <p><strong>Essentials:</strong> 0 kits</p>
-        <p><strong>Capacity:</strong> 0 kits</p>
+        <p><strong>Essentials:</strong> <span id="essentials-remaining">0</span> kits</p>
+        <p><strong>Capacity:</strong> {{ camp.essentials_capacity }} kits</p>
       </div>
     </div>
 
@@ -100,35 +124,21 @@
         <input type="number" id="clothes" placeholder="Enter amount...">
         <button id="send-supply-request">Send Request</button>
       </div>
-    </div>
-  </div>
-
-  <!-- Third Row: Graphs -->
-  <div class="row">
-    <div class="box">
-      <h2>Resource Usage</h2>
-      <canvas id="resourceChart"></canvas>
-    </div>
-    <div class="box">
-      <h2>Requests Over Time</h2>
-      <canvas id="requestsChart"></canvas>
-    </div>
-  </div>
-
-  <!-- Fourth Row: Delivery Status -->
-  <div class="row">
-    <div class="box">
-      <h2>Delivery Status</h2>
-      <div class="delivery-status">
-        <div id="delivery-list">
-          <!-- Delivery status will be populated by JavaScript -->
+      <div id="delivery-status" class="delivery-status" style="display: none;">
+        <h3>Delivery Status</h3>
+        <div class="status-details">
+          <p><strong>Warehouse:</strong> <span id="warehouse-name">-</span></p>
+          <p><strong>Vehicle ID:</strong> <span id="vehicle-id">-</span></p>
+          <p><strong>ETA:</strong> <span id="delivery-eta">-</span></p>
+          <p><strong>Status:</strong> <span id="delivery-status-text">-</span></p>
         </div>
       </div>
     </div>
   </div>
-</div>
+</body>
 {% endblock %}
 
 {% block jscontent %}
-    <script src="{{ url_for('static', filename='/js/camp_manager/index.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/camp_manager/index.js')}}"></script>
 {% endblock %}

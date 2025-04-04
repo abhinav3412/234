@@ -131,14 +131,9 @@ document.addEventListener("DOMContentLoaded", () => {
             food_capacity: parseInt(document.getElementById("food_capacity").value),
             water_capacity: parseInt(document.getElementById("water_capacity").value),
             essentials_capacity: parseInt(document.getElementById("essentials_capacity").value),
-            clothes_capacity: parseInt(document.getElementById("clothes_capacity").value)
+            clothes_capacity: parseInt(document.getElementById("clothes_capacity").value),
+            camp_head_id: document.getElementById("camp_head").value ? parseInt(document.getElementById("camp_head").value) : null
         };
-
-        // Add camp_head_id if selected
-        const campHeadId = document.getElementById("camp_head").value;
-        if (campHeadId) {
-            formData.camp_head_id = parseInt(campHeadId);
-        }
 
         try {
             const url = editingCampId 

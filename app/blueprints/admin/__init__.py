@@ -11,5 +11,5 @@ from .admin_api import (
 # Import template rendering routes from routes.py
 from .routes import (
     index, user, camp, warehouse, sensor,
-    add_sensor, delete_sensor, get_sensors
+    add_sensor, delete_sensor, get_sensors, get_sensor, update_sensor
 )

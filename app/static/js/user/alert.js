@@ -34,7 +34,7 @@ function calculateDistance(lat1, lng1, lat2, lng2) {
 // Optimized sensor data fetching with caching
 async function fetchSensorData() {
     try {
-        const response = await fetch("/static/data/sensor_data.json");
+        const response = await fetch("/user/get_sensor_data");
         if (!response.ok) throw new Error("Failed to fetch sensor data");
         
         const data = await response.json();
@@ -197,8 +197,11 @@ async function initializeSensorData(userLat, userLng) {
         }
     });
 
+    // Filter for active sensors only
+    const activeSensors = sensors.filter(sensor => sensor.operational_status === 'Active');
+
     // Add sensor markers with optimized rendering
-    sensors.forEach(sensor => {
+    activeSensors.forEach(sensor => {
         const lat = parseFloat(sensor.latitude);
         const lng = parseFloat(sensor.longitude);
 
@@ -207,7 +210,7 @@ async function initializeSensorData(userLat, userLng) {
             bounds.extend([lat, lng]);
 
             // Optimized popup content
-        marker.bindPopup(`
+            marker.bindPopup(`
                 <strong>${sensor.name}</strong><br>
                 Status: ${sensor.status}<br>
                 Rainfall: ${sensor.rainfall} mm<br>
@@ -224,18 +227,18 @@ async function initializeSensorData(userLat, userLng) {
                 L.circle([lat, lng], {
                     color: sensor.status === 'Alert' ? 'red' : 'orange',
                     fillColor: sensor.status === 'Alert' ? '#f03' : '#ffcc00',
-                fillOpacity: 0.5,
+                    fillOpacity: 0.5,
                     radius: sensor.affected_radius
-            }).addTo(map);
+                }).addTo(map);
 
                 if (sensor.status === 'Alert') {
                     L.marker([lat, lng], {
                         icon: L.divIcon({
-                className: 'danger-sign',
-                html: '⚠️',
-                iconSize: [30, 30]
+                            className: 'danger-sign',
+                            html: '⚠️',
+                            iconSize: [30, 30]
                         })
-            }).addTo(map);
+                    }).addTo(map);
                 }
             }
         }
@@ -255,7 +258,7 @@ async function initializeSensorData(userLat, userLng) {
     updateAlerts(sensors, userLat, userLng);
 
     // Calculate evacuation routes after a short delay
-    setTimeout(() => simulateTrafficAndEvacuationRoutes(sensors, userLat, userLng), 1000);
+    setTimeout(() => simulateTrafficAndEvacuationRoutes(activeSensors, userLat, userLng), 1000);
 }
 
 // Optimized sensor table update
@@ -282,19 +285,24 @@ function updateAlerts(sensors, userLat, userLng) {
     alertBox.innerHTML = '';
     
     sensors.forEach(sensor => {
+        // Only show alerts for active sensors
+        if (sensor.operational_status !== 'Active') {
+            return;
+        }
+        
         if (sensor.status === 'Alert' || sensor.status === 'Warning') {
             const distance = calculateDistance(userLat, userLng, sensor.latitude, sensor.longitude);
-        const alertItem = document.createElement('div');
-        alertItem.className = 'alert-item';
-        alertItem.innerHTML = `
+            const alertItem = document.createElement('div');
+            alertItem.className = 'alert-item';
+            alertItem.innerHTML = `
                 <p><strong>${sensor.name}</strong></p>
                 <p>Status: ${sensor.status}</p>
                 <p>Predicted Landslide Time: ${sensor.predicted_landslide_time}</p>
-            <p>Distance: ${distance.toFixed(2)} km away</p>
+                <p>Distance: ${distance.toFixed(2)} km away</p>
                 <button class="share-alert-btn">Share Alert</button>
-        `;
-        alertBox.appendChild(alertItem);
-    
+            `;
+            alertBox.appendChild(alertItem);
+        
             // Add click handler for alert sound
             alertItem.addEventListener('click', () => {
                 try {
@@ -307,7 +315,7 @@ function updateAlerts(sensors, userLat, userLng) {
             // Update map view and show popup
             map.setView([sensor.latitude, sensor.longitude], 12);
             const marker = L.marker([sensor.latitude, sensor.longitude]).addTo(map);
-        marker.bindPopup(`
+            marker.bindPopup(`
                 ${sensor.name}<br>
                 Status: ${sensor.status}<br>
                 Rainfall: ${sensor.rainfall} mm<br>
@@ -317,7 +325,7 @@ function updateAlerts(sensors, userLat, userLng) {
                 Soil Type: ${sensor.soil_type}<br>
                 Risk Level: ${sensor.risk_level}<br>
                 Predicted Landslide Time: ${sensor.predicted_landslide_time}
-        `).openPopup();
+            `).openPopup();
         }
     });
 }

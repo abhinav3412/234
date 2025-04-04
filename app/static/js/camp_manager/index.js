@@ -42,286 +42,284 @@ function startTypewriter() {
 // Start the typewriter effect on page load
 document.addEventListener('DOMContentLoaded', () => {
   startTypewriter();
-});
+  fetchCampDetails();
+  fetchUserRequests();
+  
+  // Fetch people in camp
+  async function fetchPeople() {
+    try {
+      const response = await fetch('/camp_manager/get_people');
+      if (!response.ok) throw new Error('Failed to fetch people');
+      
+      const people = await response.json();
+      const peopleList = document.getElementById('people-list');
+      peopleList.innerHTML = '';
+      
+      if (people.length === 0) {
+        const noPersonItem = document.createElement('li');
+        noPersonItem.textContent = 'No people in camp';
+        noPersonItem.style.color = 'gray';
+        noPersonItem.style.fontStyle = 'italic';
+        peopleList.appendChild(noPersonItem);
+        return;
+      }
 
-
-// Populate People List
-document.addEventListener("DOMContentLoaded", function () {
-  const searchInput = document.getElementById("filter");
-  const peopleList = document.getElementById("people-list");
-
-  fetch('/camp_manager/get_people')
-      .then(response => response.json())
-      .then(data => {
-          populatePeopleList(data);
-
-          // Add search event listener
-          searchInput.addEventListener("input", function () {
-              const searchTerm = searchInput.value.toLowerCase();
-              const filteredPeople = data.filter(person =>
-                  person.username.toLowerCase().includes(searchTerm)
-              );
-              populatePeopleList(filteredPeople);
-          });
-      })
-      .catch(error => console.error("Error fetching people:", error));
-
-  function populatePeopleList(people) {
-      peopleList.innerHTML = ""; // Clear existing list
       people.forEach(person => {
-          const li = document.createElement("li");
-          li.innerHTML = `
-              <strong>ID:</strong> ${person.uid}<br>
-              <strong>Name:</strong> ${person.username}<br>
-              <strong>Contact:</strong> ${person.mobile}<br>
-              <strong>Place:</strong> ${person.location}
-          `;
-          peopleList.appendChild(li);
+        const li = document.createElement('li');
+        li.className = 'person-item';
+        li.innerHTML = `
+          <div class="person-info">
+            <p><strong>Name:</strong> ${person.name}</p>
+            <p><strong>Phone:</strong> ${person.phone}</p>
+            <p><strong>Entry Date:</strong> ${person.entry_date}</p>
+          </div>
+        `;
+        peopleList.appendChild(li);
       });
-  }
-});
 
-// Fake Data for User Requests
-const requests = [];
-for (let i = 1; i <= 5; i++) {
-  requests.push({
-    id: `R${i}`,
-    user: `User ${i}`,
-    request: `Request ${i}`,
+      // Update the filter functionality
+      const filter = document.getElementById('filter');
+      if (filter) {
+        filter.addEventListener('input', function() {
+          const filterValue = this.value.toLowerCase();
+          const peopleItems = peopleList.getElementsByClassName('person-item');
+          
+          Array.from(peopleItems).forEach(item => {
+            const text = item.textContent.toLowerCase();
+            item.style.display = text.includes(filterValue) ? '' : 'none';
+          });
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching people:', error);
+      const peopleList = document.getElementById('people-list');
+      peopleList.innerHTML = `
+        <li style="color: red; padding: 10px; text-align: center;">
+          Error loading people list: ${error.message}
+        </li>
+      `;
+    }
+  }
+
+  // Fetch camp details
+  async function fetchCampDetails() {
+    try {
+      const response = await fetch('/camp_manager/get_camp_details');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to fetch camp details');
+      }
+      
+      const data = await response.json();
+      
+      // Update resource remaining values
+      document.getElementById('food-remaining').textContent = data.food_stock_quota || 0;
+      document.getElementById('water-remaining').textContent = data.water_stock_litres || 0;
+      document.getElementById('clothes-remaining').textContent = data.clothes_stock || 0;
+      document.getElementById('essentials-remaining').textContent = data.essentials_stock || 0;
+      
+    } catch (error) {
+      console.error('Error fetching camp details:', error);
+      // Display error message to user
+      const errorMessage = document.createElement('div');
+      errorMessage.className = 'alert alert-danger';
+      errorMessage.textContent = `Error: ${error.message}`;
+      document.querySelector('.row').prepend(errorMessage);
+    }
+  }
+
+  // Handle supply request submission
+  document.getElementById('send-supply-request').addEventListener('click', async () => {
+    const food = document.getElementById('food').value;
+    const water = document.getElementById('water').value;
+    const essentials = document.getElementById('essentials').value;
+    const clothes = document.getElementById('clothes').value;
+
+    if (!food && !water && !essentials && !clothes) {
+      alert('Please enter at least one item quantity');
+      return;
+    }
+
+    const items = {
+      food: parseInt(food) || 0,
+      water: parseInt(water) || 0,
+      essentials: parseInt(essentials) || 0,
+      clothes: parseInt(clothes) || 0
+    };
+
+    try {
+      const response = await fetch('/camp_manager/request_resources', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ items })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Show delivery status
+        const deliveryStatus = document.getElementById('delivery-status');
+        deliveryStatus.style.display = 'block';
+
+        // Update delivery status details
+        document.getElementById('warehouse-name').textContent = data.data.warehouse;
+        document.getElementById('vehicle-id').textContent = data.data.vehicle_id;
+        document.getElementById('delivery-eta').textContent = data.data.eta;
+        document.getElementById('delivery-status-text').textContent = 'In Transit';
+
+        // Clear form
+        document.getElementById('food').value = '';
+        document.getElementById('water').value = '';
+        document.getElementById('essentials').value = '';
+        document.getElementById('clothes').value = '';
+
+        // Update resource remaining values
+        await fetchCampDetails();
+      } else {
+        alert(data.message || 'Failed to request resources');
+      }
+    } catch (error) {
+      console.error('Error requesting resources:', error);
+      alert('Failed to request resources. Please try again.');
+    }
   });
-}
 
-// Populate Requests List
-const requestsList = document.getElementById('requests-list');
-requests.forEach(request => {
-  const li = document.createElement('li');
-  li.innerHTML = `
-    <strong>User:</strong> ${request.user}<br>
-    <strong>Request:</strong> ${request.request}<br>
-    <button class="accept">Accept</button>
-    <button class="decline">Decline</button>
-  `;
-  requestsList.appendChild(li);
-});
+  // Filter people list
+  document.getElementById('filter').addEventListener('input', function() {
+    const filterValue = this.value.toLowerCase();
+    const peopleList = document.getElementById('people-list');
+    const people = peopleList.getElementsByTagName('li');
+    
+    for (let i = 0; i < people.length; i++) {
+      const text = people[i].textContent.toLowerCase();
+      if (text.includes(filterValue)) {
+        people[i].style.display = '';
+      } else {
+        people[i].style.display = 'none';
+      }
+    }
+  });
 
-
-document.addEventListener("DOMContentLoaded", function () {
-  fetch('/camp_manager/get_camp_details')
-        .then(response => response.json())
-        .then(data => {
-            if (!data) return;
-            // Default values if data is missing
-            const numPeoplePresent = data.num_people_present || 0;
-            const capacity = data.capacity || 0;
-            
-            const foodStockQuota = data.food_stock_quota || 0;
-            const foodCapacity = data.food_capacity || 0;
-            const waterStockLitres = data.water_stock_litres || 0;
-            
-            const clothesRemaining = data.clothes_stock || 0;
-            const clothesCapacity = data.clothes_capacity || 0;
-
-            const essentialsRemaining = data.essentials_stock || 0;
-            const essentialsCapacity = data.essentials_capacity || 0;
-
-            // Update People Capacity Chart
-            new Chart(document.getElementById('peopleCapacityChart'), {
-                type: 'doughnut',
-                data: {
-                    labels: ['Current', 'Remaining'],
-                    datasets: [{
-                        data: [numPeoplePresent, Math.max(capacity - numPeoplePresent, 0)],
-                        backgroundColor: ['#2575fc', '#ff6f61'],
-                    }],
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom' },
-                    },
-                },
-            });
-
-            // Update Food & Water Section
-            document.querySelector('.resource-details').innerHTML = `
-                <i class="fas fa-utensils"></i>
-                <p><strong>Food Remaining:</strong> ${foodStockQuota} kg</p>
-                <p><strong>Food Capacity:</strong> ${foodCapacity} kg</p>
-                <i class="fas fa-tint"></i>
-                <p><strong>Water Remaining:</strong> ${waterStockLitres} L</p>
-                <p><strong>Water Capacity:</strong> 5000 L</p>
-            `;
-
-            // Update Clothes & Essentials Section
-            document.querySelectorAll('.resource-details')[1].innerHTML = `
-                <i class="fas fa-tshirt"></i>
-                <p><strong>Clothes:</strong> ${clothesRemaining} sets</p>
-                <p><strong>Capacity:</strong> ${clothesCapacity} sets</p>
-                <i class="fas fa-first-aid"></i>
-                <p><strong>Essentials:</strong> ${essentialsRemaining} kits</p>
-                <p><strong>Capacity:</strong> ${essentialsCapacity} kits</p>
-            `;
-
-
-
-            // Use nullish coalescing (??) to ensure default values
-            const campID = data.cid ?? 0;
-            const campName = data.camp_name ?? "Unknown";
-            const location = data.location ?? "Not Available";
-            const campHead = data.camp_head ?? "Unknown";
-            const phone = data.mobile ?? "N/A";
-            // Update Camp Details Section
-            document.querySelector('.camp-details').innerHTML = `
-                <div class="detail-item">
-                    <i class="fas fa-id-badge"></i>
-                    <span><strong>Camp ID:</strong> ${campID}</span>
-                </div>
-                <div class="detail-item">
-                    <i class="fas fa-id-badge"></i>
-                    <span><strong>Camp Name:</strong> ${campName}</span>
-                </div>
-                <div class="detail-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span><strong>Location:</strong> ${location}</span>
-                </div>
-                <div class="detail-item">
-                    <i class="fas fa-user"></i>
-                    <span><strong>Camp Head:</strong> ${campHead}</span>
-                </div>
-                <div class="detail-item">
-                    <i class="fas fa-phone"></i>
-                    <span><strong>Phone:</strong> ${phone}</span>
-                </div>
-            `;
-
-        })
-      .catch(error => console.error("Error fetching camp details:", error));
-});
-
-
-
-// Resource Usage Bar Chart
-const resourceChart = new Chart(document.getElementById('resourceChart'), {
-  type: 'bar',
-  data: {
-    labels: ['Food', 'Water', 'Clothes', 'Essentials'],
-    datasets: [{
-      label: 'Resource Usage',
-      data: [500, 3000, 200, 150],
-      backgroundColor: ['#2575fc', '#6a11cb', '#ff6f61', '#28a745'],
-    }],
-  },
-});
-
-// Requests Over Time Line Chart
-const requestsChart = new Chart(document.getElementById('requestsChart'), {
-  type: 'line',
-  data: {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-    datasets: [{
-      label: 'Requests Over Time',
-      data: [10, 20, 15, 25, 30],
-      borderColor: '#ff6f61',
-      fill: false,
-    }],
-  },
-});
-
-// Supply Request Form
-document.getElementById('send-supply-request').addEventListener('click', () => {
-  const food = parseInt(document.getElementById('food').value) || 0;
-  const water = parseInt(document.getElementById('water').value) || 0;
-  const essentials = parseInt(document.getElementById('essentials').value) || 0;
-  const clothes = parseInt(document.getElementById('clothes').value) || 0;
-
-  // Validate inputs
-  if (food < 0 || water < 0 || essentials < 0 || clothes < 0) {
-    alert('Please enter valid quantities (non-negative numbers)');
-    return;
+  // Function to update delivery status
+  async function updateDeliveryStatus() {
+    try {
+      const response = await fetch('/camp_manager/get_delivery_status');
+      if (!response.ok) throw new Error('Failed to fetch delivery status');
+      
+      const data = await response.json();
+      const deliveryStatus = document.getElementById('delivery-status');
+      
+      if (data.success && data.deliveries.length > 0) {
+        // Show delivery status section
+        deliveryStatus.style.display = 'block';
+        
+        // Update delivery status details with the most recent delivery
+        const latestDelivery = data.deliveries[0];
+        document.getElementById('warehouse-name').textContent = latestDelivery.warehouse;
+        document.getElementById('vehicle-id').textContent = latestDelivery.vehicle_id;
+        document.getElementById('delivery-eta').textContent = latestDelivery.eta;
+        document.getElementById('delivery-status-text').textContent = 'In Transit';
+      } else {
+        // Hide delivery status if no active deliveries
+        deliveryStatus.style.display = 'none';
+      }
+    } catch (error) {
+      console.error('Error updating delivery status:', error);
+    }
   }
 
-  // Prepare request data
-  const requestData = {
-    items: {
-      food: food,
-      water: water,
-      essentials: essentials,
-      clothes: clothes
-    },
-    priority: 'general' // Can be modified to 'emergency' if needed
+  // Function to fetch and display user requests
+  async function fetchUserRequests() {
+    try {
+      const response = await fetch('/camp_manager/get_user_requests');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to fetch user requests');
+      }
+      const requests = await response.json();
+      
+      const requestsList = document.getElementById('requests-list');
+      requestsList.innerHTML = ''; // Clear existing requests
+      
+      if (requests.length === 0) {
+        const noRequestsItem = document.createElement('li');
+        noRequestsItem.textContent = 'No pending requests';
+        noRequestsItem.style.color = 'gray';
+        noRequestsItem.style.fontStyle = 'italic';
+        requestsList.appendChild(noRequestsItem);
+        return;
+      }
+      
+      requests.forEach(request => {
+        const listItem = document.createElement('li');
+        listItem.className = 'request-item';
+        listItem.innerHTML = `
+          <div class="request-info">
+            <p><strong>Name:</strong> ${request.name}</p>
+            <p><strong>Phone:</strong> ${request.phone}</p>
+            <p><strong>Slots:</strong> ${request.number_slots}</p>
+            <p><strong>Priority:</strong> ${request.priority}</p>
+            <p><strong>Status:</strong> ${request.status}</p>
+            <p><strong>Requested:</strong> ${request.created_at}</p>
+          </div>
+          ${request.status === 'Pending' ? `
+            <div class="request-actions">
+              <button onclick="updateRequestStatus(${request.id}, 'Approved')" class="approve-btn">Approve</button>
+              <button onclick="updateRequestStatus(${request.id}, 'Rejected')" class="reject-btn">Reject</button>
+            </div>
+          ` : ''}
+        `;
+        requestsList.appendChild(listItem);
+      });
+    } catch (error) {
+      console.error('Error fetching user requests:', error);
+      const requestsList = document.getElementById('requests-list');
+      requestsList.innerHTML = `
+        <li style="color: red; padding: 10px; text-align: center;">
+          Error loading requests: ${error.message}
+        </li>
+      `;
+    }
+  }
+
+  // Function to update request status
+  window.updateRequestStatus = async function(requestId, status) {
+    try {
+      const response = await fetch('/camp_manager/update_request_status', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          request_id: requestId,
+          status: status
+        })
+      });
+
+      if (!response.ok) throw new Error('Failed to update request status');
+      
+      // Refresh the requests list
+      fetchUserRequests();
+      // Refresh camp details to update occupancy
+      fetchCampDetails();
+      // Refresh people list if request was approved
+      if (status === 'Approved') {
+        fetchPeople();
+      }
+      
+      alert(`Request ${status.toLowerCase()} successfully`);
+    } catch (error) {
+      console.error('Error updating request status:', error);
+      alert('Failed to update request status');
+    }
   };
 
-  // Send request to server
-  fetch('/camp_manager/request_resources', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(requestData)
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      alert(`Request Sent Successfully!\nETA: ${data.data.eta}\nVehicle: ${data.data.vehicle_id}\nWarehouse: ${data.data.warehouse}`);
-      // Clear form
-      document.getElementById('food').value = '';
-      document.getElementById('water').value = '';
-      document.getElementById('essentials').value = '';
-      document.getElementById('clothes').value = '';
-      // Update delivery status
-      updateDeliveryStatus();
-    } else {
-      alert(`Error: ${data.message}`);
-    }
-  })
-  .catch(error => {
-    console.error('Error sending request:', error);
-    alert('Error sending request. Please try again.');
-  });
-});
-
-// Function to update delivery status
-function updateDeliveryStatus() {
-  fetch('/camp_manager/get_delivery_status')
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        const deliveryList = document.getElementById('delivery-list');
-        deliveryList.innerHTML = ''; // Clear existing list
-
-        if (data.deliveries.length === 0) {
-          deliveryList.innerHTML = '<p>No active deliveries</p>';
-          return;
-        }
-
-        data.deliveries.forEach(delivery => {
-          const deliveryItem = document.createElement('div');
-          deliveryItem.className = 'delivery-item';
-          deliveryItem.innerHTML = `
-            <div class="delivery-header">
-              <i class="fas fa-truck"></i>
-              <span>Vehicle ${delivery.vehicle_id}</span>
-            </div>
-            <div class="delivery-details">
-              <p><strong>Warehouse:</strong> ${delivery.warehouse}</p>
-              <p><strong>Status:</strong> ${delivery.status}</p>
-              <p><strong>ETA:</strong> ${delivery.eta}</p>
-            </div>
-          `;
-          deliveryList.appendChild(deliveryItem);
-        });
-      } else {
-        console.error('Error fetching delivery status:', data.message);
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching delivery status:', error);
-    });
-}
-
-// Update delivery status every 5 minutes
-document.addEventListener('DOMContentLoaded', () => {
+  // Initial load
+  fetchPeople();
   updateDeliveryStatus();
-  setInterval(updateDeliveryStatus, 5 * 60 * 1000); // 5 minutes
+  
+  // Update delivery status every 30 seconds
+  setInterval(updateDeliveryStatus, 30000);
 });
